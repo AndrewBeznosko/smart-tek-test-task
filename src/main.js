@@ -4,6 +4,7 @@ import './registerServiceWorker';
 import router from './router';
 import store from './store';
 import '@/assets/scss/_index.scss';
+import '@/assets/svg-icons';
 
 Vue.config.productionTip = false;
 

@@ -12,6 +12,11 @@
         <!-- TODO: fix route name view -->
         <router-link :to="{ name: 'Breed' }">
           Избранные пёсели
+          <SvgIcon
+            name="heart"
+            width="16"
+            height="14"
+          />
           <!-- TODO: add <SvgIcon> component -->
         </router-link>
       </div>

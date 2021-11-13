@@ -36,6 +36,6 @@ module.exports = {
         'CONTENT'
       ],
       'alphabetical': false
-    }]
+    }],
   },
 };
