@@ -5,7 +5,7 @@ export const fetchDogsList = async () => {
   return data?.message;
 };
 
-export const fetchDogImage = async ({ breed }) => {
+export const fetchDogBreedImage = async ({ breed }) => {
   const { data } = await apiClient.get(`breed/${breed}/images/random`);
   return data?.message;
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="breeds-page">
     <div class="breeds-page__nav">
-<!--      -->
+      <!-- TODO: add control panel -->
     </div>
     <DogsGrid
       class="breeds-page__dogs-grid"

@@ -13,7 +13,11 @@
       :alt="name"
       class="media-card__img"
     />
-    <span class="media-card__name" v-text="name"/>
+    <router-link
+      to="/"
+      class="media-card__name"
+      v-text="name"
+    />
   </div>
 </template>
 
@@ -30,14 +34,11 @@ export default {
 
 <style lang="scss" scoped>
   .media-card {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding: 25px;
     height: 290px;
     position: relative;
-    background: #ffffff linear-gradient(1.26deg, #000000 -5.53%, rgba(0, 0, 0, 0) 54.45%);
+    background-color: #ffffff;
     border-radius: 8px;
+    overflow: hidden;
     z-index: 1;
 
     &__favorite-button {
@@ -57,11 +58,25 @@ export default {
     }
 
     &__name {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      width: 100%;
+      height: 100%;
       font-weight: 600;
       font-size: 25px;
       line-height: 28px;
       letter-spacing: 0.01em;
       text-transform: capitalize;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 25px;
+      box-sizing: border-box;
+      background: linear-gradient(1.26deg, #000000 -5.53%, rgba(0, 0, 0, 0) 54.45%);
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 </style>

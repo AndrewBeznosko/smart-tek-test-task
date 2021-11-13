@@ -32,7 +32,9 @@ export default {
   },
   computed: {
     breedKey() {
-      return (breed) => (isNotEmptyArray(breed) ? breed.join('/') : breed);
+      return (breed) => (isNotEmptyArray(breed)
+        ? breed.join('/')
+        : breed);
     },
   },
 };
@@ -46,7 +48,7 @@ export default {
 
     &--first-media-large {
       &:first-child {
-        // large style
+        // TODO: large style
       }
     }
   }

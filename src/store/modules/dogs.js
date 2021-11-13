@@ -1,4 +1,4 @@
-import { fetchDogsList } from '@/api/dogs';
+import { fetchDogBreedImage, fetchDogsList } from '@/api/dogs';
 
 const patchAllBreedsList = (allBreedsList) => Object.entries(allBreedsList)
   .reduce((accumulator, [breed, subBreeds]) => {
@@ -30,7 +30,6 @@ export default {
     async fetchDogsList({ commit }) {
       commit('SET_IS_LOADING');
       const allBreedsList = await fetchDogsList();
-      console.log(patchAllBreedsList(allBreedsList));
       commit('SET_DOGS_LIST', patchAllBreedsList(allBreedsList));
       commit('SET_IS_LOADING', false); // TODO: make isLoading universal
     },
