@@ -38,6 +38,7 @@ export default {
     left: 0;
     background: #151419;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.55);
+    z-index: 99;
 
     &__container {
       display: flex;

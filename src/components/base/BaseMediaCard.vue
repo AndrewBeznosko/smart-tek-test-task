@@ -8,8 +8,9 @@
       />
     </button>
     <img
-      :src="imgUrl"
-      alt=""
+      v-if="img"
+      :src="img"
+      :alt="name"
       class="media-card__img"
     />
     <span class="media-card__name" v-text="name"/>
@@ -20,8 +21,8 @@
 export default {
   name: 'MediaCard',
   props: {
-    id: [String, Number],
-    imgUrl: String,
+    mediaId: [String, Number],
+    img: String,
     name: String,
   },
 };
@@ -29,8 +30,13 @@ export default {
 
 <style lang="scss" scoped>
   .media-card {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 25px;
+    height: 290px;
     position: relative;
-    background: linear-gradient(1.26deg, #000000 -5.53%, rgba(0, 0, 0, 0) 54.45%);
+    background: #ffffff linear-gradient(1.26deg, #000000 -5.53%, rgba(0, 0, 0, 0) 54.45%);
     border-radius: 8px;
     z-index: 1;
 
@@ -48,6 +54,14 @@ export default {
       height: 100%;
       object-fit: cover;
       z-index: -1;
+    }
+
+    &__name {
+      font-weight: 600;
+      font-size: 25px;
+      line-height: 28px;
+      letter-spacing: 0.01em;
+      text-transform: capitalize;
     }
   }
 </style>
