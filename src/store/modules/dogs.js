@@ -1,4 +1,4 @@
-import { fetchDogBreedImage, fetchDogsList } from '@/api/dogs';
+import { fetchDogsList } from '@/api/dogs';
 
 const patchAllBreedsList = (allBreedsList) => Object.entries(allBreedsList)
   .reduce((accumulator, [breed, subBreeds]) => {
