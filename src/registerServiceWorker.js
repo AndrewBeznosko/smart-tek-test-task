@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+// TODO: remove this file
 
 import { register } from 'register-service-worker';
 
