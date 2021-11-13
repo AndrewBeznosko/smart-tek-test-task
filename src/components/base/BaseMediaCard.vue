@@ -13,11 +13,7 @@
       :alt="name"
       class="media-card__img"
     />
-    <router-link
-      to="/"
-      class="media-card__name"
-      v-text="name"
-    />
+    <div class="media-card__name-block" v-text="name" />
   </div>
 </template>
 
@@ -43,8 +39,16 @@ export default {
 
     &__favorite-button {
       position: absolute; // TODO: add mixin to position property
-      top: 25px;
-      left: 25px;
+      top: 20px;
+      left: 20px;
+      padding: 5px;
+      cursor: pointer;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,.7));
+      transition: .2s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
     }
 
     &__img {
@@ -57,7 +61,7 @@ export default {
       z-index: -1;
     }
 
-    &__name {
+    &__name-block {
       display: flex;
       align-items: flex-end;
       justify-content: flex-end;
@@ -73,10 +77,6 @@ export default {
       padding: 25px;
       box-sizing: border-box;
       background: linear-gradient(1.26deg, #000000 -5.53%, rgba(0, 0, 0, 0) 54.45%);
-
-      &:hover {
-        text-decoration: underline;
-      }
     }
   }
 </style>
