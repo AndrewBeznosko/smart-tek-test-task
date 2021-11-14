@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AppNav/>
+    <AppNav class="app__nav"/>
     <div class="app-container">
       <router-view/>
     </div>
@@ -24,5 +24,11 @@ export default {
   color: #ffffff; // TODO: move to variables
   background: #1B1A1F linear-gradient(180deg, #1B1A1F 0%, #111013 99.09%);
   min-height: 100vh;
+}
+
+.app {
+  &__nav {
+    margin-bottom: 50px;
+  }
 }
 </style>

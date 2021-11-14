@@ -1,22 +1,24 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+import Breeds from '@/views/Breeds.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'Breeds',
+    component: Breeds,
   },
   {
-    path: '/breed',
-    name: 'Breed',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "breed" */ '@/views/Breed.vue'),
+    path: '/:breed',
+    name: 'BreedsItem',
+    component: () => import(/* webpackChunkName: "breeds-item" */ '@/views/BreedsItem.vue'),
+  },
+  {
+    path: '/favourites',
+    name: 'BreedsFavourites',
+    component: () => import(/* webpackChunkName: "breeds-favourites" */ '@/views/BreedsFavourites.vue'),
   },
 ];
 

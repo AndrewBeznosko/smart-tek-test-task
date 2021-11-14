@@ -1,8 +1,6 @@
 <template>
   <div class="breeds-page">
-    <div class="breeds-page__nav">
-      <!-- TODO: add control panel -->
-    </div>
+    <BreedsControlPanel class="breeds-page__nav" />
     <DogsGrid
       class="breeds-page__dogs-grid"
       :dogs-list="dogsList"
@@ -13,10 +11,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import DogsGrid from '@/components/DogsGrid.vue';
+import BreedsControlPanel from '@/components/BreedsControlPanel.vue';
 
 export default {
   name: 'Home',
   components: {
+    BreedsControlPanel,
     DogsGrid,
   },
   computed: {
