@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import ROUTE from '@/router/routeNames';
 
 const Breeds = () => import(/* webpackChunkName: "breeds" */ '@/views/Breeds.vue');
-const BreedsFavourites = () => import(/* webpackChunkName: "breeds-favourites" */ '@/views/BreedsFavourites.vue');
+const BreedsFavorites = () => import(/* webpackChunkName: "breeds-favorites" */ '@/views/BreedsFavorites.vue');
 const BreedsItem = () => import(/* webpackChunkName: "breeds-item" */ '@/views/BreedsItem.vue');
 
 Vue.use(VueRouter);
@@ -15,9 +15,9 @@ const routes = [
     component: Breeds,
   },
   {
-    path: '/favourites',
-    name: ROUTE.BreedsFavourites,
-    component: BreedsFavourites,
+    path: '/favorites',
+    name: ROUTE.BreedsFavorites,
+    component: BreedsFavorites,
   },
   {
     path: '/:breed',

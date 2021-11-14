@@ -1,5 +1,5 @@
 const LOCAL_STORAGE_KEYS = Object.freeze({
-  DogBreedsFavourites: 'dogBreedsFavourites',
+  DogBreedsFavorites: 'dogBreedsFavorites',
 });
 
 export default LOCAL_STORAGE_KEYS;

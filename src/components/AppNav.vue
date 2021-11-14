@@ -7,7 +7,7 @@
       <router-link
         class="app-nav__favourite-link"
         active-class="app-nav__favourite-link--active"
-        :to="breedsFavouritesRoute"
+        :to="breedsFavoritesRoute"
       >
         Избранные пёсели
         <SvgIcon
@@ -26,8 +26,8 @@ import ROUTE from '@/router/routeNames';
 export default {
   name: 'AppNav',
   computed: {
-    breedsFavouritesRoute() {
-      return { name: ROUTE.BreedsFavourites };
+    breedsFavoritesRoute() {
+      return { name: ROUTE.BreedsFavorites };
     },
     breedsRoute() {
       return { name: ROUTE.Breeds };

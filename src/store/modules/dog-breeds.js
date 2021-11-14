@@ -32,10 +32,10 @@ const patchAllBreedsList = (allBreedsList) => Object.entries(allBreedsList)
 
 const getFirstSymbol = (str) => str.charAt(0).toUpperCase();
 
-const getDogBreedsFavouritesFromStorage = () => {
-  const dogBreedsFavourites = localStorage.getItem(LOCAL_STORAGE_KEYS.DogBreedsFavourites);
+const getDogBreedsFavoritesFromStorage = () => {
+  const dogBreedsFavorites = localStorage.getItem(LOCAL_STORAGE_KEYS.DogBreedsFavorites);
 
-  return JSON.parse(dogBreedsFavourites) || [];
+  return JSON.parse(dogBreedsFavorites) || [];
 };
 
 export default {
@@ -43,18 +43,30 @@ export default {
 
   state: {
     dogBreedsList: [],
-    dogBreedsFavourites: getDogBreedsFavouritesFromStorage(),
+    dogBreedsFavorites: getDogBreedsFavoritesFromStorage(),
   },
   mutations: {
     SET_DOG_BREEDS_LIST(state, dogBreedsList) {
       state.dogBreedsList = dogBreedsList;
     },
     ADD_DOG_BREEDS_ITEM_TO_FAVOURITE(state, { dog, favoriteState }) {
-      state.dogBreedsFavourites.push({
+      state.dogBreedsFavorites.push({
         ...dog,
         isFavorite: favoriteState,
       });
-      localStorage.setItem(LOCAL_STORAGE_KEYS.DogBreedsFavourites, JSON.stringify(state.dogBreedsFavourites));
+      localStorage.setItem(LOCAL_STORAGE_KEYS.DogBreedsFavorites, JSON.stringify(state.dogBreedsFavorites));
+
+      // TODO: refactor it
+      const dogIndex = state.dogBreedsList.findIndex(({ key }) => key === dog.key);
+      const dogInList = state.dogBreedsList[dogIndex];
+      if (dogInList) {
+        dogInList.isFavorite = favoriteState;
+      }
+    },
+    REMOVE_DOG_BREEDS_ITEM_FROM_FAVOURITE(state, { dog, favoriteState }) {
+      const favoriteDogIndex = state.dogBreedsFavorites.findIndex(({ img }) => img === dog.img);
+      state.dogBreedsFavorites.splice(favoriteDogIndex, 1);
+      localStorage.setItem(LOCAL_STORAGE_KEYS.DogBreedsFavorites, JSON.stringify(state.dogBreedsFavorites));
 
       // TODO: refactor it
       const dogIndex = state.dogBreedsList.findIndex(({ key }) => key === dog.key);
@@ -91,16 +103,18 @@ export default {
     },
 
     handleFavouriteStateChange({ commit, state }, { dog, favoriteState }) {
-      const hasFavorite = state.dogBreedsFavourites.find(({ img }) => img === dog.img);
+      const hasFavorite = state.dogBreedsFavorites.find(({ img }) => img === dog.img);
 
-      if (!hasFavorite) {
+      if (hasFavorite) {
+        commit('REMOVE_DOG_BREEDS_ITEM_FROM_FAVOURITE', { dog, favoriteState });
+      } else {
         commit('ADD_DOG_BREEDS_ITEM_TO_FAVOURITE', { dog, favoriteState });
       }
     },
   },
   getters: {
     dogBreedsList: ({ dogBreedsList }) => dogBreedsList,
-    dogBreedsFavourites: ({ dogBreedsFavourites }) => dogBreedsFavourites,
+    dogBreedsFavorites: ({ dogBreedsFavorites }) => dogBreedsFavorites,
 
     dogBreedsGroupedAlphabetically: ({ dogBreedsList }) => dogBreedsList.reduce((accumulator, breed) => {
       const group = getFirstSymbol(breed.name);

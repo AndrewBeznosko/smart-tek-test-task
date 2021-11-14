@@ -1,6 +1,6 @@
 const ROUTE = Object.freeze({
   Breeds: 'Breeds',
-  BreedsFavourites: 'BreedsFavourites',
+  BreedsFavorites: 'BreedsFavorites',
   BreedsItem: 'BreedsItem',
 });
 
