@@ -2,10 +2,12 @@
   <MediaCard
     :img="breedImg"
     :name="breed.name"
+    @favorite="handleFavoriteClick"
   />
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import { fetchDogBreedImages } from '@/api/dog-breeds/dog-breeds';
 
 export default {
@@ -20,6 +22,17 @@ export default {
   data: () => ({
     breedImg: null,
   }),
+  methods: {
+    ...mapActions('dogBreeds', ['handleFavouriteStateChange']),
+
+    handleFavoriteClick(favoriteState) {
+      this.handleFavouriteStateChange({
+        breed: this.breed,
+        breedImg: this.breedImg,
+        favoriteState,
+      });
+    },
+  },
   async created() {
     this.breedImg = await fetchDogBreedImages({
       breed: this.breed.breed,

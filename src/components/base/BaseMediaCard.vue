@@ -1,8 +1,11 @@
 <template>
   <div class="media-card">
-    <button class="media-card__favorite-button">
+    <button
+      class="media-card__favorite-button"
+      @click="$emit('favorite', !isFavorite)"
+    >
       <SvgIcon
-        name="heart"
+        :name="isFavoriteIcon"
         width="29"
         height="26"
       />
@@ -21,9 +24,17 @@
 export default {
   name: 'MediaCard',
   props: {
-    mediaId: [String, Number],
+    isFavorite: {
+      type: Boolean,
+      default: false,
+    },
     img: String,
     name: String,
+  },
+  computed: {
+    isFavoriteIcon() {
+      return this.isFavorite ? 'heart-fill' : 'heart';
+    },
   },
 };
 </script>
