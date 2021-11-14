@@ -1,0 +1,16 @@
+@import "~normalize.css/normalize.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%; // 10px
+}
+
+button {
+  padding: initial;
+  background-color: initial;
+  border: initial;
+  cursor: pointer;
+}

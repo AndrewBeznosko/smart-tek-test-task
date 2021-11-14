@@ -30,21 +30,21 @@ export default {
 
 <style lang="scss" scoped>
   .media-card {
-    height: 290px;
+    height: 29rem;
     position: relative;
     background-color: #ffffff;
-    border-radius: 8px;
+    border-radius: 0.8rem;
     overflow: hidden;
     z-index: 1;
 
     &__favorite-button {
       position: absolute; // TODO: add mixin to position property
-      top: 20px;
-      left: 20px;
-      padding: 5px;
+      top: 2rem;
+      left: 2rem;
+      padding: 0.5rem;
       cursor: pointer;
-      filter: drop-shadow(0 0 10px rgba(0,0,0,.7));
-      transition: .2s;
+      filter: drop-shadow(0 0 1rem rgba(0,0,0,.7));
+      transition: var(--animation-time);
 
       &:hover {
         transform: scale(1.2);
@@ -68,13 +68,13 @@ export default {
       width: 100%;
       height: 100%;
       font-weight: 600;
-      font-size: 25px;
-      line-height: 28px;
+      font-size: 2.5rem;
+      line-height: 2.8rem;
       letter-spacing: 0.01em;
       text-transform: capitalize;
       color: #ffffff;
       text-decoration: none;
-      padding: 25px;
+      padding: 2.5rem;
       box-sizing: border-box;
       background: linear-gradient(1.26deg, #000000 -5.53%, rgba(0, 0, 0, 0) 54.45%);
     }

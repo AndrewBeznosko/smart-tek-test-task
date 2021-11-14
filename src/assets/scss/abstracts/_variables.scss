@@ -1,0 +1,25 @@
+:root {
+  // colors
+  --white: #ffffff;
+  --gray-300: #626262;
+  --gray-400: #1B1A1F;
+  --gray-700: #151419;
+  --gray-800: #111013;
+  --black: #000000;
+  --blue-dark: #3C59F0;
+
+  // abstract colors
+  --primary: var(--blue-dark);
+  --secondary: var(--gray-700);
+  --light: var(--gray-300);
+  --dark: var(--gray-800);
+
+  // animation
+  --animation-time: .2s;
+}
+
+$amount: 20%;
+$primary--hover: darken(#235d79, $amount) !default;
+$success--hover: darken(#58b58b, $amount) !default;
+$warning--hover: darken(#f0a744, $amount) !default;
+$danger--hover: darken(#d85243, $amount) !default;

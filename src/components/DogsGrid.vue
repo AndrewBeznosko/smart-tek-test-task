@@ -44,7 +44,7 @@ export default {
   .dogs-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px; // TODO: add rem
+    gap: 3rem; // TODO: add rem
 
     &--first-media-large {
       &:first-child {

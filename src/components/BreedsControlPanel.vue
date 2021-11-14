@@ -1,44 +1,53 @@
 <template>
   <div class="control-panel">
     <div class="control-panel__row">
-      <button class="control-panel__breed-btn" type="button">
+      <button
+        class="control-panel__breed-btn"
+        type="button"
+        @click="toggleBreedsListVisibility"
+      >
         Породы
         <SvgIcon
+          class="control-panel__breed-btn-icon"
+          :class="{ 'control-panel__breed-btn-icon--opened': isBreedsListVisible }"
           name="arrow-down"
           width="9"
           height="5"
         />
       </button>
     </div>
-    <div class="control-panel__breeds">
-      <BaseBadge name="Все пёсели" is-active />
-      <div class="control-panel__breeds-list">
-        <template v-for="(group, key) in breedsGroupedAlphabetically">
-          <div
-            :key="key"
-            class="control-panel__breeds-alphabet-group-letter"
-            v-text="key"
-          />
-          <BaseBadge
-            v-for="breed in group"
-            :key="breed"
-            class="control-panel__breeds-alphabet-group-badge"
-            :name="breed"
-          />
-        </template>
+    <transition name="fade">
+      <div class="control-panel__breeds">
+        <BaseBadge name="Все пёсели" is-active />
+        <div class="control-panel__breeds-list">
+          <template v-for="(group, key) in breedsGroupedAlphabetically">
+            <div
+              :key="key"
+              class="control-panel__breeds-alphabet-group-letter"
+              v-text="key"
+            />
+            <BaseBadge
+              v-for="breed in group"
+              :key="breed"
+              class="control-panel__breeds-alphabet-group-badge"
+              :name="breed"
+            />
+          </template>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { isNotEmptyArray } from '@/helpers';
-
-const getFirstSymb = (str) => str.charAt(0).toUpperCase();
+import { isNotEmptyArray, getFirstSymb } from '@/helpers';
 
 export default {
   name: 'BreedsControlPanel',
+  data: () => ({
+    isBreedsListVisible: false,
+  }),
   computed: {
     ...mapGetters('dogs', ['dogsList']),
     dogsListOnlyStrings() {
@@ -57,6 +66,11 @@ export default {
       }, {});
     },
   },
+  methods: {
+    toggleBreedsListVisibility() {
+      this.isBreedsListVisible = !this.isBreedsListVisible;
+    },
+  },
 };
 </script>
 
@@ -64,29 +78,37 @@ export default {
   .control-panel {
     &__breed-btn {
       color: #ffffff;
-      padding: 2px 0;
+      padding: 0.2rem 0;
       border-bottom: dashed 1px #ffffff;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 1rem;
+    }
+
+    &__breed-btn-icon {
+      transition: var(--animation-time);
+
+      &--opened {
+        transform: rotateX(180deg);
+      }
     }
 
     &__breeds {
-      padding-top: 30px;
+      padding-top: 3rem;
     }
 
     &__breeds-alphabet-group {
       display: inline-flex;
-      gap: 15px;
+      gap: 1.5rem;
     }
 
     &__breeds-alphabet-group-letter {
-      font-size: 20px;
-      line-height: 28px;
+      font-size: 2rem;
+      line-height: 2.8rem;
       color: #626262;
 
       &:not(:first-of-type) {
-        margin-left: 25px;
+        margin-left: 2.5rem;
       }
     }
 
@@ -95,10 +117,10 @@ export default {
     }
 
     &__breeds-list {
-      margin-top: 17px;
+      margin-top: 1.7rem;
       display: inline-flex;
       align-items: center;
-      gap: 15px;
+      gap: 1.5rem;
       flex-wrap: wrap;
     }
   }

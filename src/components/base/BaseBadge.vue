@@ -30,12 +30,12 @@ export default {
   .badge {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 4px 12px;
+    gap: 0.8rem;
+    padding: 0.4rem 1.2rem;
     border: 1px solid #626262;
-    border-radius: 20px;
-    font-size: 12px;
-    line-height: 16px;
+    border-radius: 2rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
     color: #626262;
 
     &--active {

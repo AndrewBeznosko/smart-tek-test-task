@@ -32,12 +32,12 @@ export default {
 
 <style lang="scss" scoped>
   .app-nav {
-    height: 100px;
+    height: 10rem;
     position: sticky;
     top: 0;
     left: 0;
     background: #151419;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.55);
     z-index: 99;
 
     &__container {
