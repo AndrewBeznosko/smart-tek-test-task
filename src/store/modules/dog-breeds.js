@@ -23,6 +23,8 @@ const patchAllBreedsList = (allBreedsList) => Object.entries(allBreedsList)
     return [...accumulator, getBreedsItemTemplate(breed)];
   }, []);
 
+const getFirstSymbol = (str) => str.charAt(0).toUpperCase();
+
 export default {
   namespaced: true,
 
@@ -42,5 +44,14 @@ export default {
   },
   getters: {
     dogBreedsList: ({ dogBreedsList }) => dogBreedsList,
+
+    dogBreedsGroupedAlphabetically: ({ dogBreedsList }) => dogBreedsList.reduce((accumulator, breed) => {
+      const group = getFirstSymbol(breed.name);
+
+      return {
+        ...accumulator,
+        [group]: [...(accumulator[group] || []), breed],
+      };
+    }, {}),
   },
 };

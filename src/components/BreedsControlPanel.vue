@@ -33,9 +33,9 @@
             />
             <BaseBadge
               v-for="breed in group"
-              :key="breed"
+              :key="breed.name"
               class="control-panel__breeds-alphabet-group-badge"
-              :name="breed"
+              :name="breed.name"
               @click.native="redirectToTheBreed(breed)"
             />
           </template>
@@ -47,7 +47,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getFirstSymbol } from '@/helpers';
 
 export default {
   name: 'BreedsControlPanel',
@@ -55,28 +54,19 @@ export default {
     isBreedsListVisible: false,
   }),
   computed: {
-    ...mapGetters('dogBreeds', ['dogBreedsList']),
-
-    dogBreedsListNames() {
-      return this.dogBreedsList.map(({ name }) => name);
-    },
-    dogBreedsGroupedAlphabetically() {
-      return this.dogBreedsListNames.reduce((accumulator, breed) => {
-        const group = getFirstSymbol(breed);
-
-        return {
-          ...accumulator,
-          [group]: [...(accumulator[group] || []), breed],
-        };
-      }, {});
-    },
+    ...mapGetters('dogBreeds', ['dogBreedsList', 'dogBreedsGroupedAlphabetically']),
   },
   methods: {
     toggleBreedsListVisibility() {
       this.isBreedsListVisible = !this.isBreedsListVisible;
     },
-    redirectToTheBreed(breed) {
-      this.$router.push({ name: 'BreedsItem', params: { breed } });
+    redirectToTheBreed(dog) {
+      const breed = [dog.breed, dog.subBreed].filter(Boolean).join('-');
+
+      this.$router.push({
+        name: 'BreedsItem',
+        params: { breed },
+      });
     },
   },
 };
@@ -119,10 +109,6 @@ export default {
       &:not(:first-of-type) {
         margin-left: 2.5rem;
       }
-    }
-
-    &__breeds-alphabet-group-badge {
-      text-transform: capitalize;
     }
 
     &__breeds-list {
