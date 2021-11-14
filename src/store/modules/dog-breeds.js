@@ -34,6 +34,7 @@ export default {
 
   state: {
     dogBreedsList: [],
+    dogBreedsFavourites: [],
   },
   mutations: {
     SET_DOG_BREEDS_LIST(state, dogBreedsList) {
@@ -48,6 +49,7 @@ export default {
   },
   getters: {
     dogBreedsList: ({ dogBreedsList }) => dogBreedsList,
+    dogBreedsFavourites: ({ dogBreedsFavourites }) => dogBreedsFavourites,
 
     dogBreedsGroupedAlphabetically: ({ dogBreedsList }) => dogBreedsList.reduce((accumulator, breed) => {
       const group = getFirstSymbol(breed.name);

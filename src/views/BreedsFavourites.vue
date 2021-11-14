@@ -1,43 +1,32 @@
 <template>
   <div class="breeds-favourites">
-    <BreedsControlPanel class="breeds-favourites__nav">
-<!--      -->
-    </BreedsControlPanel>
-    <MediaCardsGrid>
-      <DogsGridItem
-        v-for="(breed, i) in dogBreedsList"
-        :key="i"
-        :breed="breed"
+    <MediaCardsGrid v-if="dogBreedsFavourites.length">
+      <MediaCard
+        v-for="breed in dogBreedsFavourites"
+        :key="breed.key"
+        :img="breed.img"
+        :name="breed.name"
       />
     </MediaCardsGrid>
+    <h2 v-if="!dogBreedsFavourites.length">
+      There is no favorite image
+    </h2>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import BreedsControlPanel from '@/components/BreedsControlPanel.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'BreedsFavourites',
-  components: {
-    BreedsControlPanel,
-  },
   computed: {
-    ...mapGetters('dogBreeds', ['dogBreedsList']),
-  },
-  methods: {
-    ...mapActions('dogBreeds', ['fetchDogBreedsList']),
-  },
-  created() {
-    this.fetchDogBreedsList();
+    ...mapGetters('dogBreeds', ['dogBreedsFavourites']),
   },
 };
 </script>
 
 <style lang="scss" scoped>
   .breeds-favourites {
-    &__nav {
-      margin-bottom: 5rem;
-    }
+
   }
 </style>

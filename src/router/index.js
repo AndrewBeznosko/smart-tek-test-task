@@ -1,24 +1,28 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Breeds from '@/views/Breeds.vue';
+import ROUTE from '@/router/routeNames';
+
+const Breeds = () => import(/* webpackChunkName: "breeds" */ '@/views/Breeds.vue');
+const BreedsFavourites = () => import(/* webpackChunkName: "breeds-favourites" */ '@/views/BreedsFavourites.vue');
+const BreedsItem = () => import(/* webpackChunkName: "breeds-item" */ '@/views/BreedsItem.vue');
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'Breeds',
+    name: ROUTE.Breeds,
     component: Breeds,
   },
   {
-    path: '/:breed',
-    name: 'BreedsItem',
-    component: () => import(/* webpackChunkName: "breeds-item" */ '@/views/BreedsItem.vue'),
+    path: '/favourites',
+    name: ROUTE.BreedsFavourites,
+    component: BreedsFavourites,
   },
   {
-    path: '/favourites',
-    name: 'BreedsFavourites',
-    component: () => import(/* webpackChunkName: "breeds-favourites" */ '@/views/BreedsFavourites.vue'),
+    path: '/:breed',
+    name: ROUTE.BreedsItem,
+    component: BreedsItem,
   },
 ];
 

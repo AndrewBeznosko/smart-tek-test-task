@@ -14,9 +14,9 @@
         />
       </MediaCardsGrid>
     </template>
-    <div v-if="!dogBreedsList.length" class="dogs-grid__empty-list">
+    <h2 v-if="!dogBreedsList.length">
       The dog breeds list is empty
-    </div>
+    </h2>
   </div>
 </template>
 

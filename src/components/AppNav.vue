@@ -1,31 +1,38 @@
 <template>
   <nav class="app-nav">
     <div class="app-container app-nav__container">
-      <router-link class="app-nav__logo-link" :to="{ name: 'Breeds' }">
-        <img
-          class="app-nav__logo-img"
-          src="@/assets/logo.svg"
-          alt="Pesel logo"
+      <router-link :to="breedsRoute">
+        <img src="@/assets/logo.svg" alt="Pesel logo" />
+      </router-link>
+      <router-link
+        class="app-nav__favourite-link"
+        active-class="app-nav__favourite-link--active"
+        :to="breedsFavouritesRoute"
+      >
+        Избранные пёсели
+        <SvgIcon
+          name="heart"
+          width="16"
+          height="14"
         />
       </router-link>
-      <div class="app-nav__actions">
-        <!-- TODO: fix route name view -->
-        <router-link :to="{ name: 'BreedsFavourites' }">
-          Избранные пёсели
-          <SvgIcon
-            name="heart"
-            width="16"
-            height="14"
-          />
-        </router-link>
-      </div>
     </div>
   </nav>
 </template>
 
 <script>
+import ROUTE from '@/router/routeNames';
+
 export default {
   name: 'AppNav',
+  computed: {
+    breedsFavouritesRoute() {
+      return { name: ROUTE.BreedsFavourites };
+    },
+    breedsRoute() {
+      return { name: ROUTE.Breeds };
+    },
+  },
 };
 </script>
 
@@ -47,16 +54,21 @@ export default {
       height: 100%;
     }
 
-    &__logo-link {
+    &__favourite-link {
+      display: flex;
+      align-items: center;
+      color: var(--light);
+      line-height: 2.8rem;
+      gap: 1rem;
+      text-decoration: none;
 
-    }
+      &:hover {
+        text-decoration: underline;
+      }
 
-    &__logo-img {
-
-    }
-
-    &__actions {
-
+      &--active {
+        color: var(--white);
+      }
     }
   }
 </style>
