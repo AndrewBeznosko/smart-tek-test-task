@@ -37,7 +37,7 @@
               :key="breed.name"
               class="control-panel__breeds-alphabet-group-badge"
               :name="breed.name"
-              @click.native="redirectToTheBreed(breed)"
+              @click.native="navigateToTheBreed(breed)"
             />
           </template>
         </div>
@@ -48,9 +48,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import ROUTE from '@/router/routeNames';
 
 export default {
-  name: 'BreedsControlPanel',
+  name: 'DogBreedsControlPanel',
   data: () => ({
     isBreedsListVisible: false,
   }),
@@ -61,9 +62,12 @@ export default {
     toggleBreedsListVisibility() {
       this.isBreedsListVisible = !this.isBreedsListVisible;
     },
-    redirectToTheBreed(breed) {
+    hideBreedsList() {
+      this.isBreedsListVisible = false;
+    },
+    navigateToTheBreed(breed) {
       this.$router.push({
-        name: 'BreedsItem',
+        name: ROUTE.BreedsItem,
         params: { breed: breed.key },
       });
     },

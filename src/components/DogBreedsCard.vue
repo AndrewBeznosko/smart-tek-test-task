@@ -9,7 +9,7 @@
 import { fetchDogBreedImages } from '@/api/dog-breeds/dog-breeds';
 
 export default {
-  name: 'DogsGridItem',
+  name: 'DogBreedsCard',
   props: {
     breed: {
       type: Object,

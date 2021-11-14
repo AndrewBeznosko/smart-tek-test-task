@@ -1,13 +1,13 @@
 <template>
   <div class="breeds-page">
     <template v-if="dogBreedsList.length">
-      <BreedsControlPanel>
+      <DogBreedsControlPanel>
         <template #right-controls>
           Сортировка по алфавиту
         </template>
-      </BreedsControlPanel>
+      </DogBreedsControlPanel>
       <MediaCardsGrid class="breeds-page__dogs-grid">
-        <DogsGridItem
+        <DogBreedsCard
           v-for="breed in dogBreedsList"
           :key="breed.name"
           :breed="breed"
@@ -22,14 +22,14 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import BreedsControlPanel from '@/components/BreedsControlPanel.vue';
-import DogsGridItem from '@/components/DogsGridItem.vue';
+import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
+import DogBreedsCard from '@/components/DogBreedsCard.vue';
 
 export default {
   name: 'Home',
   components: {
-    BreedsControlPanel,
-    DogsGridItem,
+    DogBreedsControlPanel,
+    DogBreedsCard,
   },
   computed: {
     ...mapGetters('dogBreeds', ['dogBreedsList']),

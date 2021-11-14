@@ -1,14 +1,15 @@
 <template>
   <div class="about">
-    <BreedsControlPanel>
+    <DogBreedsControlPanel v-if="dogBreedsList.length">
       <template #left-controls>
         <BaseBadge
           :name="dogBreedInfo.name"
           icon="close"
           is-active
+          @click.native="navigateToAllBreeds"
         />
       </template>
-    </BreedsControlPanel>
+    </DogBreedsControlPanel>
     <MediaCardsGrid class="breeds-page__dogs-grid">
       <MediaCard
         v-for="breedImg in dogBreedImages"
@@ -22,14 +23,15 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import BreedsControlPanel from '@/components/BreedsControlPanel.vue';
+import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
 import { fetchDogBreedImages } from '@/api/dog-breeds/dog-breeds';
+import ROUTE from '@/router/routeNames';
 
 export default {
   name: 'BreedsItem',
 
   components: {
-    BreedsControlPanel,
+    DogBreedsControlPanel,
   },
 
   data: () => ({
@@ -55,10 +57,10 @@ export default {
         subBreed,
       });
     },
-  },
 
-  mounted() {
-    console.log(this.$route.params?.breed);
+    navigateToAllBreeds() {
+      this.$router.push({ name: ROUTE.Breeds });
+    },
   },
 
   async created() {
