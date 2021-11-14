@@ -16,6 +16,7 @@
             height="5"
           />
         </button>
+        <slot name="left-controls"/>
       </div>
       <div class="control-panel__row-right">
         <slot name="right-controls"/>
@@ -60,12 +61,10 @@ export default {
     toggleBreedsListVisibility() {
       this.isBreedsListVisible = !this.isBreedsListVisible;
     },
-    redirectToTheBreed(dog) {
-      const breed = [dog.breed, dog.subBreed].filter(Boolean).join('-');
-
+    redirectToTheBreed(breed) {
       this.$router.push({
         name: 'BreedsItem',
-        params: { breed },
+        params: { breed: breed.key },
       });
     },
   },
@@ -74,6 +73,8 @@ export default {
 
 <style lang="scss" scoped>
   .control-panel {
+    margin-bottom: 5rem;
+
     &__breed-btn {
       line-height: 2rem;
       color: var(--white);
@@ -123,6 +124,12 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+
+    &__row-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
     }
   }
 </style>

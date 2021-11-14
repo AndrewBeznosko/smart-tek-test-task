@@ -6,6 +6,12 @@
     :class="{ 'badge--active': isActive }"
   >
     {{ name }}
+    <SvgIcon
+      v-if="icon"
+      :name="icon"
+      width="6"
+      height="6"
+    />
   </component>
 </template>
 
@@ -14,6 +20,7 @@ export default {
   name: 'BaseBadge',
   props: {
     name: String,
+    icon: String,
     tag: {
       type: String,
       default: 'button',
@@ -37,15 +44,18 @@ export default {
     font-size: 1.2rem;
     line-height: 1.6rem;
     color: var(--light);
+    fill: var(--light);
 
     &:hover{
       color: var(--white);
       border-color: var(--white);
+      fill: var(--white);
     }
 
     &--active {
       color: var(--primary);
       border-color: var(--primary);
+      fill: var(--primary);
     }
   }
 </style>

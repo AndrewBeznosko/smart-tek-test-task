@@ -1,7 +1,7 @@
 <template>
   <div class="breeds-page">
     <template v-if="dogBreedsList.length">
-      <BreedsControlPanel class="breeds-page__nav">
+      <BreedsControlPanel>
         <template #right-controls>
           Сортировка по алфавиту
         </template>
@@ -45,10 +45,6 @@ export default {
 
 <style lang="scss" scoped>
   .breeds-page {
-    &__nav {
-      margin-bottom: 5rem;
-    }
-
     &__dogs-grid {
       padding-bottom: 5rem;
     }

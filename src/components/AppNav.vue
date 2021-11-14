@@ -37,6 +37,7 @@ export default {
     left: 0;
     background: #151419;
     box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.55);
+    margin-bottom: 5rem;
     z-index: 99;
 
     &__container {

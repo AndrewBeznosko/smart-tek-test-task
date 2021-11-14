@@ -8,6 +8,10 @@ const getBreedsItemTemplate = (breed, subBreed = null) => ({
     upperFirst(breed),
     upperFirst(subBreed),
   ].filter(Boolean).join(' '),
+  key: [
+    breed,
+    subBreed,
+  ].filter(Boolean).join('-'),
 });
 
 const patchAllBreedsList = (allBreedsList) => Object.entries(allBreedsList)
@@ -53,5 +57,7 @@ export default {
         [group]: [...(accumulator[group] || []), breed],
       };
     }, {}),
+
+    getDogBreedByKey: ({ dogBreedsList }) => (key) => dogBreedsList.find((breed) => breed.key === key),
   },
 };

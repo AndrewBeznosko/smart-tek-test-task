@@ -24,6 +24,7 @@ export default {
     this.breedImg = await fetchDogBreedImages({
       breed: this.breed.breed,
       subBreed: this.breed.subBreed,
+      isRandom: true,
     });
   },
 };

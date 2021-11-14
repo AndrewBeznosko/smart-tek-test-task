@@ -40,6 +40,7 @@ export default {
       return {
         width: this.width && `${this.width}px`,
         height: this.height && `${this.height}px`,
+        fill: 'white',
       };
     },
   },
@@ -47,7 +48,10 @@ export default {
   watch: {
     name: {
       async handler(value) {
-        await import(/* webpackChunkName: "[request]" */ '../../assets/svg-icons/' + value + '.svg'); // TODO: check if it need
+        await import(
+          /* webpackChunkName: "[request]" */
+          '../../assets/svg-icons/' + value + '.svg'
+        ); // TODO: check if it need
         this.iconReady = true;
       },
       immediate: true,

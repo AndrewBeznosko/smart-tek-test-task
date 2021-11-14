@@ -7,13 +7,15 @@ export const fetchDogBreedsList = async () => {
   return data?.message;
 };
 
-export const fetchDogBreedImages = async ({ breed, subBreed, imagesCount }) => {
+export const fetchDogBreedImages = async ({
+  breed, subBreed, isRandom = false,
+}) => {
   const urlPath = [
     DOG_BREEDS_RESOURCE.Breed,
     breed,
     subBreed,
-    DOG_BREEDS_RESOURCE.ImagesRandom,
-    imagesCount,
+    DOG_BREEDS_RESOURCE.Images,
+    isRandom && DOG_BREEDS_RESOURCE.Random,
   ].filter(Boolean).join('/');
   const { data } = await apiClient.get(urlPath);
 
