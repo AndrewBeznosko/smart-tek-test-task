@@ -16,8 +16,8 @@
         />
       </button>
     </div>
-    <transition name="fade">
-      <div class="control-panel__breeds">
+    <transition name="collapse">
+      <div v-if="isBreedsListVisible" class="control-panel__breeds">
         <BaseBadge name="Все пёсели" is-active />
         <div class="control-panel__breeds-list">
           <template v-for="(group, key) in breedsGroupedAlphabetically">
@@ -77,9 +77,10 @@ export default {
 <style lang="scss" scoped>
   .control-panel {
     &__breed-btn {
-      color: #ffffff;
+      line-height: 2rem;
+      color: var(--white);
       padding: 0.2rem 0;
-      border-bottom: dashed 1px #ffffff;
+      border-bottom: dashed 1px var(--white);
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -105,7 +106,7 @@ export default {
     &__breeds-alphabet-group-letter {
       font-size: 2rem;
       line-height: 2.8rem;
-      color: #626262;
+      color: var(--light);
 
       &:not(:first-of-type) {
         margin-left: 2.5rem;

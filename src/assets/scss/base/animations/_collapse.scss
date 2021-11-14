@@ -1,0 +1,21 @@
+.collapse-enter-active {
+  transition: all var(--animation-time) ease-in;
+}
+
+.collapse-leave-active {
+  transition: all var(--animation-time) ease-out;
+}
+
+.collapse-enter,
+.collapse-leave-to {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.collapse-leave,
+.collapse-enter-to {
+  max-height: 100rem;
+  overflow: hidden;
+  opacity: 1;
+}

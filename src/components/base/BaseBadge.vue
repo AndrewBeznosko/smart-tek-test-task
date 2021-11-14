@@ -32,15 +32,15 @@ export default {
     align-items: center;
     gap: 0.8rem;
     padding: 0.4rem 1.2rem;
-    border: 1px solid #626262;
+    border: 1px solid var(--light);
     border-radius: 2rem;
     font-size: 1.2rem;
     line-height: 1.6rem;
-    color: #626262;
+    color: var(--light);
 
     &--active {
-      color: #3C59F0;
-      border-color: #3C59F0;
+      color: var(--primary);
+      border-color: var(--primary);
     }
   }
 </style>

@@ -32,7 +32,7 @@ export default {
   .media-card {
     height: 29rem;
     position: relative;
-    background-color: #ffffff;
+    background-color: var(--white);
     border-radius: 0.8rem;
     overflow: hidden;
     z-index: 1;
@@ -72,11 +72,11 @@ export default {
       line-height: 2.8rem;
       letter-spacing: 0.01em;
       text-transform: capitalize;
-      color: #ffffff;
+      color: var(--white);
       text-decoration: none;
       padding: 2.5rem;
       box-sizing: border-box;
-      background: linear-gradient(1.26deg, #000000 -5.53%, rgba(0, 0, 0, 0) 54.45%);
+      background: linear-gradient(1.26deg, var(--black) -5.53%, rgba(0, 0, 0, 0) 54.45%);
     }
   }
 </style>

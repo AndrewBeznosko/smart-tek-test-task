@@ -34,11 +34,11 @@ export default {
 <style lang="scss" scoped>
   .breeds-page {
     &__nav {
-      margin-bottom: 50px;
+      margin-bottom: 5rem;
     }
 
     &__dogs-grid {
-      padding-bottom: 50px;
+      padding-bottom: 5rem;
     }
   }
 </style>

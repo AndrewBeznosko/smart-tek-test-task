@@ -8,6 +8,17 @@ html {
   font-size: 62.5%; // 10px
 }
 
+body {
+  font-family: 'IBM Plex Sans';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: var(--white);
+  font-size: 1.6rem;
+  background: var(--gray-400) linear-gradient(180deg, var(--gray-400) 0%, var(--gray-800) 99.09%);
+  min-height: 100vh;
+}
+
 button {
   padding: initial;
   background-color: initial;

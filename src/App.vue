@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <AppNav class="app__nav"/>
     <div class="app-container">
       <router-view/>
@@ -16,19 +16,9 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'IBM Plex Sans';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #ffffff; // TODO: move to variables
-  background: #1B1A1F linear-gradient(180deg, #1B1A1F 0%, #111013 99.09%);
-  min-height: 100vh;
-}
-
 .app {
   &__nav {
-    margin-bottom: 50px;
+    margin-bottom: 5rem;
   }
 }
 </style>
