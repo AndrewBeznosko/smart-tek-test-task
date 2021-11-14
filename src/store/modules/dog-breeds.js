@@ -1,5 +1,5 @@
 import upperFirst from 'lodash.upperfirst';
-import { fetchDogBreedsList } from '@/api/dog-breeds/dog-breeds';
+import { fetchDogBreedImages, fetchDogBreedsList } from '@/api/dog-breeds/dog-breeds';
 import LOCAL_STORAGE_KEYS from '@/constants/local-storage.consstants';
 
 const getBreedsItemTemplate = (breed, subBreed = null) => ({
@@ -14,6 +14,7 @@ const getBreedsItemTemplate = (breed, subBreed = null) => ({
     subBreed,
   ].filter(Boolean).join('-'),
   isFavorite: false,
+  img: null,
 });
 
 const patchAllBreedsList = (allBreedsList) => Object.entries(allBreedsList)
@@ -48,12 +49,27 @@ export default {
     SET_DOG_BREEDS_LIST(state, dogBreedsList) {
       state.dogBreedsList = dogBreedsList;
     },
-    ADD_DOG_BREEDS_ITEM_TO_FAVOURITE(state, { breed, image }) {
+    ADD_DOG_BREEDS_ITEM_TO_FAVOURITE(state, { dog, favoriteState }) {
       state.dogBreedsFavourites.push({
-        ...breed,
-        image,
+        ...dog,
+        isFavorite: favoriteState,
       });
       localStorage.setItem(LOCAL_STORAGE_KEYS.DogBreedsFavourites, JSON.stringify(state.dogBreedsFavourites));
+
+      // TODO: refactor it
+      const dogIndex = state.dogBreedsList.findIndex(({ key }) => key === dog.key);
+      const dogInList = state.dogBreedsList[dogIndex];
+      if (dogInList) {
+        dogInList.isFavorite = favoriteState;
+      }
+    },
+    SET_DOG_BREED_IMAGE_IN_LIST(state, { dog, dogImg }) {
+      const dogIndex = state.dogBreedsList.findIndex(({ key }) => key === dog.key);
+      const dogInList = state.dogBreedsList[dogIndex];
+
+      if (dogInList) {
+        dogInList.img = dogImg;
+      }
     },
   },
   actions: {
@@ -62,11 +78,23 @@ export default {
       commit('SET_DOG_BREEDS_LIST', patchAllBreedsList(allBreedsList));
     },
 
-    handleFavouriteStateChange({ commit, state }, { breed, breedImg, favoriteState }) {
-      const alreadyHasFavorite = state.dogBreedsFavourites.find(({ key }) => key === breed.key);
+    async fetchDogBreedImageRandom({ commit }, dog) {
+      const { breed, subBreed } = dog;
+      const dogImg = await fetchDogBreedImages({
+        breed,
+        subBreed,
+        isRandom: true,
+      });
+      commit('SET_DOG_BREED_IMAGE_IN_LIST', { dog, dogImg });
 
-      if (!alreadyHasFavorite) {
-        commit('ADD_DOG_BREEDS_ITEM_TO_FAVOURITE', { breed, breedImg, favoriteState });
+      return dogImg;
+    },
+
+    handleFavouriteStateChange({ commit, state }, { dog, favoriteState }) {
+      const hasFavorite = state.dogBreedsFavourites.find(({ img }) => img === dog.img);
+
+      if (!hasFavorite) {
+        commit('ADD_DOG_BREEDS_ITEM_TO_FAVOURITE', { dog, favoriteState });
       }
     },
   },

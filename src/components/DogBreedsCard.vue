@@ -1,44 +1,36 @@
 <template>
   <MediaCard
-    :img="breedImg"
-    :name="breed.name"
+    :img="dog.img"
+    :name="dog.name"
+    :is-favorite="dog.isFavorite"
     @favorite="handleFavoriteClick"
   />
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-import { fetchDogBreedImages } from '@/api/dog-breeds/dog-breeds';
 
 export default {
   name: 'DogBreedsCard',
   props: {
-    breed: {
+    dog: {
       type: Object,
       default: () => ({}),
       required: true,
     },
   },
-  data: () => ({
-    breedImg: null,
-  }),
   methods: {
-    ...mapActions('dogBreeds', ['handleFavouriteStateChange']),
+    ...mapActions('dogBreeds', ['handleFavouriteStateChange', 'fetchDogBreedImageRandom']),
 
     handleFavoriteClick(favoriteState) {
       this.handleFavouriteStateChange({
-        breed: this.breed,
-        breedImg: this.breedImg,
+        dog: this.dog,
         favoriteState,
       });
     },
   },
-  async created() {
-    this.breedImg = await fetchDogBreedImages({
-      breed: this.breed.breed,
-      subBreed: this.breed.subBreed,
-      isRandom: true,
-    });
+  created() {
+    this.fetchDogBreedImageRandom(this.dog);
   },
 };
 </script>

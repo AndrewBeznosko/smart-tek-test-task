@@ -8,9 +8,9 @@
       </DogBreedsControlPanel>
       <MediaCardsGrid class="breeds-page__dogs-grid">
         <DogBreedsCard
-          v-for="breed in dogBreedsList"
-          :key="breed.name"
-          :breed="breed"
+          v-for="dog in dogBreedsList"
+          :key="dog.key"
+          :dog="dog"
         />
       </MediaCardsGrid>
     </template>

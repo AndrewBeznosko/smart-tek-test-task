@@ -2,10 +2,11 @@
   <div class="breeds-favourites">
     <MediaCardsGrid v-if="dogBreedsFavourites.length">
       <MediaCard
-        v-for="breed in dogBreedsFavourites"
-        :key="breed.key"
-        :img="breed.img"
-        :name="breed.name"
+        v-for="dog in dogBreedsFavourites"
+        :key="dog.img"
+        :img="dog.img"
+        :name="dog.name"
+        :is-favorite="dog.isFavorite"
       />
     </MediaCardsGrid>
     <h2 v-if="!dogBreedsFavourites.length">
