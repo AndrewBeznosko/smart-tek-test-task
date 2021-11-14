@@ -1,2 +1,2 @@
-export { default as isNotEmptyArray } from './isNotEmptyArray';
-export { default as getFirstSymb } from './getFirstSymb';
+export { default as isNotEmptyArray } from './isNotEmptyArray'; // TODO: unused function
+export { default as getFirstSymbol } from './getFirstSymbol';

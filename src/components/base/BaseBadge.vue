@@ -38,6 +38,11 @@ export default {
     line-height: 1.6rem;
     color: var(--light);
 
+    &:hover{
+      color: var(--white);
+      border-color: var(--white);
+    }
+
     &--active {
       color: var(--primary);
       border-color: var(--primary);

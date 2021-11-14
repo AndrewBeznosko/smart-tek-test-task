@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 // modules
-import dogs from './modules/dogs';
+import dogBreeds from './modules/dog-breeds';
 
 Vue.use(Vuex);
 
@@ -10,6 +10,6 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    dogs,
+    dogBreeds,
   },
 });

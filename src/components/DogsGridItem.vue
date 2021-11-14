@@ -1,40 +1,30 @@
 <template>
   <MediaCard
     :img="breedImg"
-    :name="breedName"
+    :name="breed.name"
   />
 </template>
 
 <script>
-import { fetchDogBreedImage } from '@/api/dogs';
-import { isNotEmptyArray } from '@/helpers';
+import { fetchDogBreedImages } from '@/api/dog-breeds/dog-breeds';
 
 export default {
   name: 'DogsGridItem',
   props: {
     breed: {
-      type: [String, Array],
-      default: () => [],
+      type: Object,
+      default: () => ({}),
       required: true,
     },
   },
   data: () => ({
     breedImg: null,
   }),
-  computed: {
-    breedName() {
-      if (isNotEmptyArray(this.breed)) {
-        return this.breed.join(' ');
-      }
-      return this.breed;
-    },
-  },
   async created() {
-    const breed = isNotEmptyArray(this.breed)
-      ? this.breed.join('/')
-      : this.breed;
-
-    this.breedImg = await fetchDogBreedImage({ breed });
+    this.breedImg = await fetchDogBreedImages({
+      breed: this.breed.breed,
+      subBreed: this.breed.subBreed,
+    });
   },
 };
 </script>

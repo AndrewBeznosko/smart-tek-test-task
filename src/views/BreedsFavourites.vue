@@ -1,32 +1,43 @@
 <template>
   <div class="breeds-favourites">
-    <!-- TODO: add breeds list -->
+    <BreedsControlPanel class="breeds-favourites__nav">
+<!--      -->
+    </BreedsControlPanel>
+    <MediaCardsGrid>
+      <DogsGridItem
+        v-for="(breed, i) in dogBreedsList"
+        :key="i"
+        :breed="breed"
+      />
+    </MediaCardsGrid>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-// import DogsGrid from '@/components/DogsGrid.vue';
+import BreedsControlPanel from '@/components/BreedsControlPanel.vue';
 
 export default {
   name: 'BreedsFavourites',
   components: {
-    // DogsGrid,
+    BreedsControlPanel,
   },
   computed: {
-    ...mapGetters('dogs', ['dogsList']),
+    ...mapGetters('dogBreeds', ['dogBreedsList']),
   },
   methods: {
-    ...mapActions('dogs', ['fetchDogsList']),
+    ...mapActions('dogBreeds', ['fetchDogBreedsList']),
   },
   created() {
-    this.fetchDogsList();
+    this.fetchDogBreedsList();
   },
 };
 </script>
 
 <style lang="scss" scoped>
   .breeds-favourites {
-  //
+    &__nav {
+      margin-bottom: 5rem;
+    }
   }
 </style>

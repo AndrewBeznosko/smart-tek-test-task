@@ -1,32 +1,44 @@
 <template>
   <div class="breeds-page">
-    <BreedsControlPanel class="breeds-page__nav" />
-    <DogsGrid
-      class="breeds-page__dogs-grid"
-      :dogs-list="dogsList"
-    />
+    <template v-if="dogBreedsList.length">
+      <BreedsControlPanel class="breeds-page__nav">
+        <template #right-controls>
+          Сортировка по алфавиту
+        </template>
+      </BreedsControlPanel>
+      <MediaCardsGrid class="breeds-page__dogs-grid">
+        <DogsGridItem
+          v-for="breed in dogBreedsList"
+          :key="breed.name"
+          :breed="breed"
+        />
+      </MediaCardsGrid>
+    </template>
+    <div v-if="!dogBreedsList.length" class="dogs-grid__empty-list">
+      The dog breeds list is empty
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import DogsGrid from '@/components/DogsGrid.vue';
 import BreedsControlPanel from '@/components/BreedsControlPanel.vue';
+import DogsGridItem from '@/components/DogsGridItem.vue';
 
 export default {
   name: 'Home',
   components: {
     BreedsControlPanel,
-    DogsGrid,
+    DogsGridItem,
   },
   computed: {
-    ...mapGetters('dogs', ['dogsList']),
+    ...mapGetters('dogBreeds', ['dogBreedsList']),
   },
   methods: {
-    ...mapActions('dogs', ['fetchDogsList']),
+    ...mapActions('dogBreeds', ['fetchDogBreedsList']),
   },
   created() {
-    this.fetchDogsList();
+    this.fetchDogBreedsList();
   },
 };
 </script>

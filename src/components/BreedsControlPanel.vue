@@ -1,26 +1,31 @@
 <template>
   <div class="control-panel">
     <div class="control-panel__row">
-      <button
-        class="control-panel__breed-btn"
-        type="button"
-        @click="toggleBreedsListVisibility"
-      >
-        Породы
-        <SvgIcon
-          class="control-panel__breed-btn-icon"
-          :class="{ 'control-panel__breed-btn-icon--opened': isBreedsListVisible }"
-          name="arrow-down"
-          width="9"
-          height="5"
-        />
-      </button>
+      <div class="control-panel__row-left">
+        <button
+          class="control-panel__breed-btn"
+          type="button"
+          @click="toggleBreedsListVisibility"
+        >
+          Породы
+          <SvgIcon
+            class="control-panel__breed-btn-icon"
+            :class="{ 'control-panel__breed-btn-icon--opened': isBreedsListVisible }"
+            name="arrow-down"
+            width="9"
+            height="5"
+          />
+        </button>
+      </div>
+      <div class="control-panel__row-right">
+        <slot name="right-controls"/>
+      </div>
     </div>
     <transition name="collapse">
       <div v-if="isBreedsListVisible" class="control-panel__breeds">
         <BaseBadge name="Все пёсели" is-active />
         <div class="control-panel__breeds-list">
-          <template v-for="(group, key) in breedsGroupedAlphabetically">
+          <template v-for="(group, key) in dogBreedsGroupedAlphabetically">
             <div
               :key="key"
               class="control-panel__breeds-alphabet-group-letter"
@@ -31,6 +36,7 @@
               :key="breed"
               class="control-panel__breeds-alphabet-group-badge"
               :name="breed"
+              @click.native="redirectToTheBreed(breed)"
             />
           </template>
         </div>
@@ -41,7 +47,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { isNotEmptyArray, getFirstSymb } from '@/helpers';
+import { getFirstSymbol } from '@/helpers';
 
 export default {
   name: 'BreedsControlPanel',
@@ -49,15 +55,14 @@ export default {
     isBreedsListVisible: false,
   }),
   computed: {
-    ...mapGetters('dogs', ['dogsList']),
-    dogsListOnlyStrings() {
-      return this.dogsList.map((breed) => (isNotEmptyArray(breed)
-        ? breed.join(' ')
-        : breed));
+    ...mapGetters('dogBreeds', ['dogBreedsList']),
+
+    dogBreedsListNames() {
+      return this.dogBreedsList.map(({ name }) => name);
     },
-    breedsGroupedAlphabetically() {
-      return this.dogsListOnlyStrings.reduce((accumulator, breed) => {
-        const group = getFirstSymb(breed);
+    dogBreedsGroupedAlphabetically() {
+      return this.dogBreedsListNames.reduce((accumulator, breed) => {
+        const group = getFirstSymbol(breed);
 
         return {
           ...accumulator,
@@ -69,6 +74,9 @@ export default {
   methods: {
     toggleBreedsListVisibility() {
       this.isBreedsListVisible = !this.isBreedsListVisible;
+    },
+    redirectToTheBreed(breed) {
+      this.$router.push({ name: 'BreedsItem', params: { breed } });
     },
   },
 };
@@ -123,6 +131,12 @@ export default {
       align-items: center;
       gap: 1.5rem;
       flex-wrap: wrap;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 </style>

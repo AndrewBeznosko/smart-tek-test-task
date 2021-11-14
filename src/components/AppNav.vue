@@ -1,23 +1,22 @@
 <template>
   <nav class="app-nav">
     <div class="app-container app-nav__container">
-      <a class="app-nav__logo-link" href="/">
+      <router-link class="app-nav__logo-link" :to="{ name: 'Breeds' }">
         <img
           class="app-nav__logo-img"
           src="@/assets/logo.svg"
           alt="Pesel logo"
         />
-      </a>
+      </router-link>
       <div class="app-nav__actions">
         <!-- TODO: fix route name view -->
-        <router-link :to="{ name: 'Breed' }">
+        <router-link :to="{ name: 'BreedsFavourites' }">
           Избранные пёсели
           <SvgIcon
             name="heart"
             width="16"
             height="14"
           />
-          <!-- TODO: add <SvgIcon> component -->
         </router-link>
       </div>
     </div>
