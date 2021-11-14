@@ -19,3 +19,9 @@
   overflow: hidden;
   opacity: 1;
 }
+
+
+// TODO: move to another file
+.cell-move {
+  transition: transform calc(var(--animation-time) * 3);
+}

@@ -45,10 +45,12 @@ export default {
     dogBreedsList: [],
     dogBreedsFavorites: getDogBreedsFavoritesFromStorage(),
   },
+
   mutations: {
     SET_DOG_BREEDS_LIST(state, dogBreedsList) {
       state.dogBreedsList = dogBreedsList;
     },
+
     ADD_DOG_BREEDS_ITEM_TO_FAVOURITE(state, { dog, favoriteState }) {
       state.dogBreedsFavorites.push({
         ...dog,
@@ -63,6 +65,7 @@ export default {
         dogInList.isFavorite = favoriteState;
       }
     },
+
     REMOVE_DOG_BREEDS_ITEM_FROM_FAVOURITE(state, { dog, favoriteState }) {
       const favoriteDogIndex = state.dogBreedsFavorites.findIndex(({ img }) => img === dog.img);
       state.dogBreedsFavorites.splice(favoriteDogIndex, 1);
@@ -75,6 +78,7 @@ export default {
         dogInList.isFavorite = favoriteState;
       }
     },
+
     SET_DOG_BREED_IMAGE_IN_LIST(state, { dog, dogImg }) {
       const dogIndex = state.dogBreedsList.findIndex(({ key }) => key === dog.key);
       const dogInList = state.dogBreedsList[dogIndex];
@@ -84,6 +88,7 @@ export default {
       }
     },
   },
+
   actions: {
     async fetchDogBreedsList({ commit }) {
       const allBreedsList = await fetchDogBreedsList();
@@ -112,9 +117,13 @@ export default {
       }
     },
   },
+
   getters: {
     dogBreedsList: ({ dogBreedsList }) => dogBreedsList,
+
     dogBreedsFavorites: ({ dogBreedsFavorites }) => dogBreedsFavorites,
+
+    getDogBreedByKey: ({ dogBreedsList }) => (key) => dogBreedsList.find((breed) => breed.key === key),
 
     dogBreedsGroupedAlphabetically: ({ dogBreedsList }) => dogBreedsList.reduce((accumulator, breed) => {
       const group = getFirstSymbol(breed.name);
@@ -124,7 +133,5 @@ export default {
         [group]: [...(accumulator[group] || []), breed],
       };
     }, {}),
-
-    getDogBreedByKey: ({ dogBreedsList }) => (key) => dogBreedsList.find((breed) => breed.key === key),
   },
 };

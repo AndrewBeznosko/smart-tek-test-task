@@ -3,16 +3,26 @@
     <template v-if="dogBreedsList.length">
       <DogBreedsControlPanel>
         <template #right-controls>
-          Сортировка по алфавиту
+<!--          TODO: add switch style -->
+          <label>
+            Сортировка по алфавиту
+            <input v-model="sortByAlphabet" type="checkbox">
+          </label>
         </template>
       </DogBreedsControlPanel>
-      <MediaCardsGrid class="breeds-page__dogs-grid">
+      <transition-group
+        name="cell"
+        tag="MediaCardsGrid"
+        class="breeds-page__dogs-grid"
+      >
         <DogBreedsCard
-          v-for="dog in dogBreedsList"
+          v-for="dog in dogList"
           :key="dog.key"
+          class="cell"
           :dog="dog"
         />
-      </MediaCardsGrid>
+      </transition-group>
+
     </template>
     <h2 v-if="!dogBreedsList.length">
       The dog breeds list is empty
@@ -22,6 +32,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import shuffle from 'lodash.shuffle';
 import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
 import DogBreedsCard from '@/components/DogBreedsCard.vue';
 
@@ -31,8 +42,15 @@ export default {
     DogBreedsControlPanel,
     DogBreedsCard,
   },
+  data: () => ({
+    sortByAlphabet: false,
+  }),
   computed: {
     ...mapGetters('dogBreeds', ['dogBreedsList']),
+
+    dogList() {
+      return this.sortByAlphabet ? this.dogBreedsList : shuffle(this.dogBreedsList);
+    },
   },
   methods: {
     ...mapActions('dogBreeds', ['fetchDogBreedsList']),
