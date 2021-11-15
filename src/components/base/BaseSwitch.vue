@@ -17,15 +17,18 @@
 <script>
 export default {
   name: 'BaseSwitch',
+
   props: {
     value: [Boolean, Number],
     checked: Boolean,
   },
+
   computed: {
     isChecked() {
       return this.checked || this.value;
     },
   },
+
   methods: {
     onChangeInput(willBeChecked) {
       this.$emit('input', willBeChecked);

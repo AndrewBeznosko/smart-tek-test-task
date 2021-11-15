@@ -19,6 +19,7 @@
 /* eslint-disable prefer-template */
 export default {
   name: 'SvgIcon',
+
   props: {
     width: [String, Number],
     height: [String, Number],
@@ -27,11 +28,13 @@ export default {
       require: true,
     },
   },
+
   data() {
     return {
       iconReady: false,
     };
   },
+
   computed: {
     icon() {
       return `#icon-${this.name}`;

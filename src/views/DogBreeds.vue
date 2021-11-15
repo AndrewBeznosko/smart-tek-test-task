@@ -22,7 +22,7 @@
           :dog="dog"
         />
       </transition-group>
-
+      <Loader />
     </template>
     <h2 v-if="!dogBreedsList.length">
       The dog breeds list is empty
