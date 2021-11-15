@@ -3,11 +3,11 @@
     <template v-if="dogBreedsList.length">
       <DogBreedsControlPanel>
         <template #right-controls>
-<!--          TODO: add switch style -->
-          <label>
-            Сортировка по алфавиту
-            <input v-model="sortByAlphabet" type="checkbox">
-          </label>
+          <BaseSwitch v-model="sortByAlphabet">
+            <template #label-before>
+              Сортировка по алфавиту
+            </template>
+          </BaseSwitch>
         </template>
       </DogBreedsControlPanel>
       <transition-group
