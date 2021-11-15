@@ -1,16 +1,23 @@
 <template>
   <div class="breeds-favorites">
-    <MediaCardsGrid v-if="dogBreedsFavorites.length">
-      <MediaCard
-        v-for="dog in dogBreedsFavorites"
-        :key="dog.img"
-        :img="dog.img"
-        :name="dog.name"
-        :is-favorite="dog.isFavorite"
-        :navigate-to="dogBreedRoute(dog)"
-        @favorite="(favoriteState) => handleFavouriteStateChange({ favoriteState, dog })"
-      />
-    </MediaCardsGrid>
+    <InfiniteScroll
+      v-if="dogBreedsFavorites.length"
+      v-slot="{ items: dogBreedsFavoritesLimited }"
+      :items="dogBreedsFavorites"
+      :limit-by="20"
+    >
+      <MediaCardsGrid>
+        <MediaCard
+          v-for="dog in dogBreedsFavoritesLimited"
+          :key="dog.img"
+          :img="dog.img"
+          :name="dog.name"
+          :is-favorite="dog.isFavorite"
+          :navigate-to="dogBreedRoute(dog)"
+          @favorite="(favoriteState) => handleFavouriteStateChange({ favoriteState, dog })"
+        />
+      </MediaCardsGrid>
+    </InfiniteScroll>
     <h2 v-if="!dogBreedsFavorites.length">
       There is no favorite image
     </h2>

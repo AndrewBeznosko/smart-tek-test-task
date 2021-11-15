@@ -66,11 +66,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-  .breeds-page {
-    &__dogs-grid {
-      padding-bottom: 5rem;
-    }
-  }
-</style>

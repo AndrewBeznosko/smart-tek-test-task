@@ -1,25 +1,36 @@
 <template>
-  <div class="about">
-    <DogBreedsControlPanel v-if="dogBreedsList.length">
-      <template #left-controls>
-        <BaseBadge
-          :name="dogBreedInfo.name"
-          icon="close"
-          is-active
-          @click.native="navigateToAllBreeds"
-        />
-      </template>
-    </DogBreedsControlPanel>
-    <MediaCardsGrid class="breeds-page__dogs-grid">
-      <MediaCard
-        v-for="breedImg in dogBreedImages"
-        :key="breedImg"
-        :img="breedImg"
-        :name="dogBreedInfo.name"
-        :is-favorite="dogBreedInfo.isFavorite"
-        @favorite="(favoriteState) => handleFavoriteClick(favoriteState, breedImg)"
-      />
-    </MediaCardsGrid>
+  <div>
+    <template v-if="isShowDogs">
+      <DogBreedsControlPanel v-if="dogBreedsList.length">
+        <template #left-controls>
+          <BaseBadge
+            :name="dogBreedInfo.name"
+            icon="close"
+            is-active
+            @click.native="navigateToAllBreeds"
+          />
+        </template>
+      </DogBreedsControlPanel>
+      <InfiniteScroll
+        v-slot="{ items: dogBreedImagesLimited }"
+        :items="dogBreedImages"
+        :limit-by="20"
+      >
+        <MediaCardsGrid class="breeds-page__dogs-grid">
+          <MediaCard
+            v-for="breedImg in dogBreedImagesLimited"
+            :key="breedImg"
+            :img="breedImg"
+            :name="dogBreedInfo.name"
+            :is-favorite="dogBreedInfo.isFavorite"
+            @favorite="(favoriteState) => handleFavoriteClick(favoriteState, breedImg)"
+          />
+        </MediaCardsGrid>
+      </InfiniteScroll>
+    </template>
+    <h2 v-if="!isShowDogs">
+      There is no such dog breed
+    </h2>
   </div>
 </template>
 
@@ -44,7 +55,11 @@ export default {
     ...mapGetters('dogBreeds', ['getDogBreedByKey', 'dogBreedsList']),
 
     dogBreedInfo() {
-      return this.getDogBreedByKey(this.$route.params?.breed);
+      return this.getDogBreedByKey(this.$route.params?.breed) || {};
+    },
+
+    isShowDogs() {
+      return this.dogBreedInfo?.key;
     },
   },
 
