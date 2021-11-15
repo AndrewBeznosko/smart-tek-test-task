@@ -20,7 +20,7 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'BreedsFavorites',
+  name: 'DogBreedsFavorites',
   computed: {
     ...mapGetters('dogBreeds', ['dogBreedsFavorites']),
   },

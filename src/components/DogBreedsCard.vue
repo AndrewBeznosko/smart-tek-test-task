@@ -3,12 +3,14 @@
     :img="dog.img"
     :name="dog.name"
     :is-favorite="dog.isFavorite"
+    :navigate-to="dogBreedRoute"
     @favorite="handleFavoriteClick"
   />
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import ROUTE from '@/router/routeNames';
 
 export default {
   name: 'DogBreedsCard',
@@ -17,6 +19,14 @@ export default {
       type: Object,
       default: () => ({}),
       required: true,
+    },
+  },
+  computed: {
+    dogBreedRoute() {
+      return {
+        name: ROUTE.BreedsItem,
+        params: { breed: this.dog.key },
+      };
     },
   },
   methods: {

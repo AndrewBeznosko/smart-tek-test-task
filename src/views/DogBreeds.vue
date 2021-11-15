@@ -37,7 +37,7 @@ import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
 import DogBreedsCard from '@/components/DogBreedsCard.vue';
 
 export default {
-  name: 'Home',
+  name: 'DogBreeds',
   components: {
     DogBreedsControlPanel,
     DogBreedsCard,

@@ -16,7 +16,13 @@
       :alt="name"
       class="media-card__img"
     />
-    <div class="media-card__name-block" v-text="name" />
+    <component
+      :is="Boolean(navigateTo) ? 'router-link' : 'div'"
+      class="media-card__name-block"
+      :class="{ 'media-card__name-block--clickable': Boolean(navigateTo) }"
+      v-bind="{ to: navigateTo }"
+      v-text="name"
+    />
   </div>
 </template>
 
@@ -28,6 +34,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    navigateTo: [Object, String],
     img: String,
     name: String,
   },
@@ -88,6 +95,14 @@ export default {
       padding: 2.5rem;
       box-sizing: border-box;
       background: linear-gradient(1.26deg, var(--black) -5.53%, rgba(0, 0, 0, 0) 54.45%);
+
+      &--clickable {
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 </style>

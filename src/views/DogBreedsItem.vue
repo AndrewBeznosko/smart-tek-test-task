@@ -28,7 +28,7 @@ import { fetchDogBreedImages } from '@/api/dog-breeds/dog-breeds';
 import ROUTE from '@/router/routeNames';
 
 export default {
-  name: 'BreedsItem',
+  name: 'DogBreedsItem',
 
   components: {
     DogBreedsControlPanel,
