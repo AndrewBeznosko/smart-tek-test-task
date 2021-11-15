@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="isShowDogs">
-      <DogBreedsControlPanel v-if="dogBreedsList.length">
+      <DogBreedsControlPanel v-if="dogBreedsList.length" :active-dog-breed="dogBreedInfo">
         <template #left-controls>
           <BaseBadge
             :name="dogBreedInfo.name"
@@ -61,6 +61,10 @@ export default {
     isShowDogs() {
       return this.dogBreedInfo?.key;
     },
+  },
+
+  watch: {
+    $route: 'fetchDogBreedImages',
   },
 
   methods: {

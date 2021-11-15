@@ -24,7 +24,11 @@
     </div>
     <transition name="collapse">
       <div v-if="isBreedsListVisible" class="control-panel__breeds">
-        <BaseBadge name="Все пёсели" is-active />
+        <BaseBadge
+          name="Все пёсели"
+          :is-active="isAllDogBreeds"
+          @click.native="navigateToAllBreeds"
+        />
         <div class="control-panel__breeds-list">
           <template v-for="(group, key) in dogBreedsGroupedAlphabetically">
             <div
@@ -37,6 +41,7 @@
               :key="breed.name"
               class="control-panel__breeds-alphabet-group-badge"
               :name="breed.name"
+              :is-active="breed.key === activeDogBreedKey"
               @click.native="navigateToTheBreed(breed)"
             />
           </template>
@@ -52,12 +57,30 @@ import ROUTE from '@/router/routeNames';
 
 export default {
   name: 'DogBreedsControlPanel',
+
+  props: {
+    activeDogBreed: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+
   data: () => ({
     isBreedsListVisible: false,
   }),
+
   computed: {
     ...mapGetters('dogBreeds', ['dogBreedsList', 'dogBreedsGroupedAlphabetically']),
+
+    isAllDogBreeds() {
+      return this.$route.name === ROUTE.Breeds;
+    },
+
+    activeDogBreedKey() {
+      return this.activeDogBreed?.key;
+    },
   },
+
   methods: {
     toggleBreedsListVisibility() {
       this.isBreedsListVisible = !this.isBreedsListVisible;
@@ -70,6 +93,15 @@ export default {
         name: ROUTE.BreedsItem,
         params: { breed: breed.key },
       });
+      this.hideBreedsList();
+    },
+    navigateToAllBreeds() {
+      if (this.isAllDogBreeds) return;
+
+      this.$router.push({
+        name: ROUTE.Breeds,
+      });
+      this.hideBreedsList();
     },
   },
 };
