@@ -2,7 +2,7 @@ import upperFirst from 'lodash.upperfirst';
 import { fetchDogBreedImages, fetchDogBreedsList } from '@/api/dog-breeds/dog-breeds';
 import LOCAL_STORAGE_KEYS from '@/constants/local-storage.consstants';
 
-const getBreedsItemTemplate = (breed, subBreed = null) => ({
+const getDogBreedsItemTemplate = (breed, subBreed = null) => ({
   breed,
   subBreed,
   name: [
@@ -21,13 +21,13 @@ const patchAllBreedsList = (allBreedsList) => Object.entries(allBreedsList)
   .reduce((accumulator, [breed, subBreeds]) => {
     if (subBreeds.length) {
       const breedsWithSubBreedsArr = subBreeds.map(
-        (subBreed) => getBreedsItemTemplate(breed, subBreed),
+        (subBreed) => getDogBreedsItemTemplate(breed, subBreed),
       );
 
       return [...accumulator, ...breedsWithSubBreedsArr];
     }
 
-    return [...accumulator, getBreedsItemTemplate(breed)];
+    return [...accumulator, getDogBreedsItemTemplate(breed)];
   }, []);
 
 const getFirstSymbol = (str) => str.charAt(0).toUpperCase();

@@ -10,19 +10,20 @@
           </BaseSwitch>
         </template>
       </DogBreedsControlPanel>
-      <transition-group
-        name="cell"
-        tag="MediaCardsGrid"
-        class="breeds-page__dogs-grid"
+      <InfiniteScroll
+        v-slot="{ items: dogListLimited }"
+        :items="dogList"
+        :limit-by="20"
       >
-        <DogBreedsCard
-          v-for="dog in dogList"
-          :key="dog.key"
-          class="cell"
-          :dog="dog"
-        />
-      </transition-group>
-      <Loader />
+        <MediaCardsGrid class="breeds-page__dogs-grid">
+          <DogBreedsCard
+            v-for="dog in dogListLimited"
+            :key="dog.key"
+            class="cell"
+            :dog="dog"
+          />
+        </MediaCardsGrid>
+      </InfiniteScroll>
     </template>
     <h2 v-if="!dogBreedsList.length">
       The dog breeds list is empty
