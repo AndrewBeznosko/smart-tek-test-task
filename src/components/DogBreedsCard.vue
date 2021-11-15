@@ -4,7 +4,7 @@
     :name="dog.name"
     :is-favorite="dog.isFavorite"
     :navigate-to="dogBreedRoute"
-    @favorite="handleFavoriteClick"
+    @favorite="(favoriteState) => handleFavouriteStateChange({ favoriteState, dog })"
   />
 </template>
 
@@ -14,6 +14,7 @@ import ROUTE from '@/router/routeNames';
 
 export default {
   name: 'DogBreedsCard',
+
   props: {
     dog: {
       type: Object,
@@ -21,6 +22,7 @@ export default {
       required: true,
     },
   },
+
   computed: {
     dogBreedRoute() {
       return {
@@ -29,16 +31,11 @@ export default {
       };
     },
   },
+
   methods: {
     ...mapActions('dogBreeds', ['handleFavouriteStateChange', 'fetchDogBreedImageRandom']),
-
-    handleFavoriteClick(favoriteState) {
-      this.handleFavouriteStateChange({
-        dog: this.dog,
-        favoriteState,
-      });
-    },
   },
+
   created() {
     this.fetchDogBreedImageRandom(this.dog);
   },

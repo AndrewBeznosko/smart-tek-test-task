@@ -38,13 +38,16 @@ import DogBreedsCard from '@/components/DogBreedsCard.vue';
 
 export default {
   name: 'DogBreeds',
+
   components: {
     DogBreedsControlPanel,
     DogBreedsCard,
   },
+
   data: () => ({
     sortByAlphabet: false,
   }),
+
   computed: {
     ...mapGetters('dogBreeds', ['dogBreedsList']),
 
@@ -52,9 +55,11 @@ export default {
       return this.sortByAlphabet ? this.dogBreedsList : shuffle(this.dogBreedsList);
     },
   },
+
   methods: {
     ...mapActions('dogBreeds', ['fetchDogBreedsList']),
   },
+
   created() {
     this.fetchDogBreedsList();
   },

@@ -16,6 +16,8 @@
         :key="breedImg"
         :img="breedImg"
         :name="dogBreedInfo.name"
+        :is-favorite="dogBreedInfo.isFavorite"
+        @favorite="(favoriteState) => handleFavoriteClick(favoriteState, breedImg)"
       />
     </MediaCardsGrid>
   </div>
@@ -47,7 +49,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('dogBreeds', ['fetchDogBreedsList']),
+    ...mapActions('dogBreeds', ['fetchDogBreedsList', 'handleFavouriteStateChange']),
 
     async fetchDogBreedImages() {
       const { breed, subBreed } = this.dogBreedInfo;
@@ -60,6 +62,16 @@ export default {
 
     navigateToAllBreeds() {
       this.$router.push({ name: ROUTE.Breeds });
+    },
+
+    handleFavoriteClick(favoriteState, breedImg) {
+      this.handleFavouriteStateChange({
+        dog: {
+          ...this.dogBreedInfo,
+          img: breedImg,
+        },
+        favoriteState,
+      });
     },
   },
 

@@ -16,19 +16,22 @@
       :alt="name"
       class="media-card__img"
     />
-    <component
-      :is="Boolean(navigateTo) ? 'router-link' : 'div'"
-      class="media-card__name-block"
-      :class="{ 'media-card__name-block--clickable': Boolean(navigateTo) }"
-      v-bind="{ to: navigateTo }"
-      v-text="name"
-    />
+    <div class="media-card__name-block">
+      <router-link
+        v-if="Boolean(navigateTo)"
+        :to="navigateTo"
+        class="media-card__name-link"
+        v-text="name"
+      />
+      <template v-else>{{ name }}</template>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'MediaCard',
+
   props: {
     isFavorite: {
       type: Boolean,
@@ -38,6 +41,7 @@ export default {
     img: String,
     name: String,
   },
+
   computed: {
     isFavoriteIcon() {
       return this.isFavorite ? 'heart-fill' : 'heart';
@@ -95,13 +99,18 @@ export default {
       padding: 2.5rem;
       box-sizing: border-box;
       background: linear-gradient(1.26deg, var(--black) -5.53%, rgba(0, 0, 0, 0) 54.45%);
+    }
 
-      &--clickable {
-        cursor: pointer;
+    &__name-link {
+      width: 100%;
+      padding-top: 4rem;
+      text-align: right;
+      cursor: pointer;
+      color: inherit;
+      text-decoration: none;
 
-        &:hover {
-          text-decoration: underline;
-        }
+      &:hover {
+        text-decoration: underline;
       }
     }
   }

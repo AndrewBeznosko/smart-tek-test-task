@@ -17,6 +17,8 @@ export default {
 
 <style lang="scss">
 .app {
+  padding-bottom: 5rem;
+
   &__nav {
     margin-bottom: 5rem;
   }
