@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import ROUTE from '@/router/routeNames';
+import ROUTE from '@/constants/route-names.constants';
 
 export default {
   name: 'AppNav',

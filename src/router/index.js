@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import ROUTE from '@/router/routeNames';
+import ROUTE from '@/constants/route-names.constants';
 
 const DogBreeds = () => import(/* webpackChunkName: "breeds" */ '@/views/DogBreeds.vue');
 const DogBreedsFavorites = () => import(/* webpackChunkName: "breeds-favorites" */ '@/views/DogBreedsFavorites.vue');

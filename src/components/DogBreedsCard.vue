@@ -10,7 +10,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import ROUTE from '@/router/routeNames';
+import ROUTE from '@/constants/route-names.constants';
 
 export default {
   name: 'DogBreedsCard',

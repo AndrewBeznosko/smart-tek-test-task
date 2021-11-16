@@ -53,7 +53,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import ROUTE from '@/router/routeNames';
+import ROUTE from '@/constants/route-names.constants';
 
 export default {
   name: 'DogBreedsControlPanel',

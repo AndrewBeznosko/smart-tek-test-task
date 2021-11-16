@@ -38,7 +38,7 @@
 import { mapActions, mapGetters } from 'vuex';
 import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
 import { fetchDogBreedImages } from '@/api/dog-breeds/dog-breeds';
-import ROUTE from '@/router/routeNames';
+import ROUTE from '@/constants/route-names.constants';
 
 export default {
   name: 'DogBreedsItem',

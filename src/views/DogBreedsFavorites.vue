@@ -26,7 +26,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import ROUTE from '@/router/routeNames';
+import ROUTE from '@/constants/route-names.constants';
 
 export default {
   name: 'DogBreedsFavorites',
