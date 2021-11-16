@@ -1,8 +1,10 @@
 <template>
   <div class="loader">
-    <div class="loader__circle" />
-    <div class="loader__circle" />
-    <div class="loader__circle" />
+    <div
+      v-for="n in 3"
+      :key="n"
+      class="loader__circle"
+    />
   </div>
 </template>
 
@@ -35,11 +37,11 @@ export default {
   }
 
   @keyframes scaleChange {
-    0%, 75%, 100%{
+    0%, 75%, 100% {
       transform: scale(1);
     }
 
-    25%{
+    25% {
       transform: scale(1.33);
     }
   }

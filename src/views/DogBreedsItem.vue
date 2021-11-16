@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="isShowDogs">
-      <DogBreedsControlPanel v-if="dogBreedsList.length" :active-dog-breed="dogBreedInfo">
+      <DogBreedsControlPanel :active-dog-breed="dogBreedInfo">
         <template #left-controls>
           <BaseBadge
             :name="dogBreedInfo.name"
@@ -12,18 +12,18 @@
         </template>
       </DogBreedsControlPanel>
       <InfiniteScroll
-        v-slot="{ items: dogBreedImagesLimited }"
-        :items="dogBreedImages"
+        v-slot="{ items: dogsListByBreedLimited }"
+        :items="dogsListByBreed"
         :limit-by="20"
       >
         <MediaCardsGrid class="breeds-page__dogs-grid">
           <MediaCard
-            v-for="breedImg in dogBreedImagesLimited"
-            :key="breedImg"
-            :img="breedImg"
-            :name="dogBreedInfo.name"
-            :is-favorite="dogBreedInfo.isFavorite"
-            @favorite="(favoriteState) => handleFavoriteClick(favoriteState, breedImg)"
+            v-for="dog in dogsListByBreedLimited"
+            :key="dog.img"
+            :img="dog.img"
+            :name="dog.name"
+            :is-favorite="dog.isFavorite"
+            @favorite="(favoriteState) => handleFavouriteStateChange(favoriteState, dog)"
           />
         </MediaCardsGrid>
       </InfiniteScroll>
@@ -37,7 +37,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
-import { fetchDogBreedImages } from '@/api/dog-breeds/dog-breeds';
 import ROUTE from '@/constants/route-names.constants';
 
 export default {
@@ -47,56 +46,52 @@ export default {
     DogBreedsControlPanel,
   },
 
-  data: () => ({
-    dogBreedImages: null,
-  }),
-
   computed: {
-    ...mapGetters('dogBreeds', ['getDogBreedByKey', 'dogBreedsList']),
+    ...mapGetters('dogBreeds', [
+      'getDogBreedByKey',
+      'dogBreedsList',
+      'dogsListByBreed',
+    ]),
+
+    dogBreedKey() {
+      return this.$route.params?.breed;
+    },
 
     dogBreedInfo() {
-      return this.getDogBreedByKey(this.$route.params?.breed) || {};
+      return this.getDogBreedByKey(this.dogBreedKey) || {};
     },
 
     isShowDogs() {
-      return this.dogBreedInfo?.key;
+      return Boolean(this.dogsListByBreed?.length);
     },
   },
 
   watch: {
-    $route: 'fetchDogBreedImages',
+    $route: {
+      handler() {
+        this.fetchDogBreedImages(this.dogBreedKey);
+      },
+    },
   },
 
   methods: {
-    ...mapActions('dogBreeds', ['fetchDogBreedsList', 'handleFavouriteStateChange']),
-
-    async fetchDogBreedImages() {
-      const { breed, subBreed } = this.dogBreedInfo;
-
-      this.dogBreedImages = await fetchDogBreedImages({
-        breed,
-        subBreed,
-      });
-    },
+    ...mapActions('dogBreeds', [
+      'fetchDogBreedsList',
+      'handleFavouriteStateChange',
+      'fetchDogBreedImages',
+    ]),
 
     navigateToAllBreeds() {
       this.$router.push({ name: ROUTE.Breeds });
-    },
-
-    handleFavoriteClick(favoriteState, breedImg) {
-      this.handleFavouriteStateChange({
-        dog: {
-          ...this.dogBreedInfo,
-          img: breedImg,
-        },
-        favoriteState,
-      });
     },
   },
 
   async created() {
     await this.fetchDogBreedsList();
-    await this.fetchDogBreedImages();
+
+    if (this.dogBreedsList.length) {
+      await this.fetchDogBreedImages(this.dogBreedKey);
+    }
   },
 };
 </script>
