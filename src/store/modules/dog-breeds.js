@@ -135,6 +135,7 @@ export default {
 
     async fetchDogBreedImages({ getters, commit }, dogBreedKey) {
       const { breed, subBreed } = getters.getDogBreedByKey(dogBreedKey);
+      commit('SET_DOGS_LIST_BY_BREED', []);
       const dogBreedImages = await fetchDogBreedImages({
         breed,
         subBreed,

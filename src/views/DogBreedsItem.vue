@@ -1,17 +1,18 @@
 <template>
-  <div>
-    <template v-if="isShowDogs">
-      <DogBreedsControlPanel :active-dog-breed="dogBreedInfo">
-        <template #left-controls>
-          <BaseBadge
-            :name="dogBreedInfo.name"
-            icon="close"
-            is-active
-            @click.native="navigateToAllBreeds"
-          />
-        </template>
-      </DogBreedsControlPanel>
+  <div v-if="dogBreedsList.length">
+    <DogBreedsControlPanel :active-dog-breed="dogBreedInfo">
+      <template #left-controls>
+        <BaseBadge
+          :name="dogBreedInfo.name"
+          icon="close"
+          is-active
+          @click.native="navigateToAllBreeds"
+        />
+      </template>
+    </DogBreedsControlPanel>
+    <transition name="fade">
       <InfiniteScroll
+        v-if="isShowDogs"
         v-slot="{ items: dogsListByBreedLimited }"
         :items="dogsListByBreed"
         :limit-by="20"
@@ -27,10 +28,7 @@
           />
         </MediaCardsGrid>
       </InfiniteScroll>
-    </template>
-    <h2 v-if="!isShowDogs">
-      There is no such dog breed
-    </h2>
+    </transition>
   </div>
 </template>
 
@@ -62,7 +60,7 @@ export default {
     },
 
     isShowDogs() {
-      return Boolean(this.dogsListByBreed?.length);
+      return Boolean(this.dogsListByBreed.length);
     },
   },
 
