@@ -68,6 +68,7 @@ export default {
 
       &--active {
         color: var(--white);
+        pointer-events: none;
       }
     }
   }

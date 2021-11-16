@@ -8,6 +8,7 @@
       @click="$emit('favorite', !isFavorite)"
     >
       <SvgIcon
+        class="media-card__favorite-icon"
         :name="isFavoriteIcon"
         width="29"
         height="26"
@@ -92,6 +93,11 @@ export default {
       &:hover {
         transform: scale(1.2);
       }
+    }
+
+    &__favorite-icon {
+      fill: var(--white);
+      color: var(--white);
     }
 
     &__img {
