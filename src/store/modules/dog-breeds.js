@@ -8,6 +8,10 @@ const getDogBreedsFavoritesFromStorage = () => {
   return JSON.parse(dogBreedsFavorites) || [];
 };
 
+const updateStorageFavorites = (dogBreeds) => {
+  localStorage.setItem(LOCAL_STORAGE_KEYS.DogBreedsFavorites, JSON.stringify(dogBreeds));
+};
+
 const getDogBreedsItemTemplate = (breed, subBreed = null, img = null) => {
   const name = [upperFirst(breed), upperFirst(subBreed)].filter(Boolean).join(' ');
   const key = [breed, subBreed].filter(Boolean).join('-');
@@ -39,6 +43,32 @@ const patchAllBreedsList = (allBreedsList) => Object.entries(allBreedsList)
 
 const getFirstSymbol = (str) => str.charAt(0).toUpperCase();
 
+const UPDATE_ELEMENT_DOG_BREEDS_LIST = (state, dogToUpdate) => {
+  const dogIndex = state.dogBreedsList.findIndex(({ key }) => key === dogToUpdate.key);
+  const dogInList = state.dogBreedsList[dogIndex];
+
+  if (dogInList) {
+    state.dogBreedsList[dogIndex] = Object.assign(dogInList, dogToUpdate);
+  }
+};
+
+const UPDATE_ELEMENT_DOGS_LIST_BY_BREED = (state, dogToUpdate) => {
+  const dogIndex = state.dogsListByBreed.findIndex(({ img }) => img === dogToUpdate.img);
+  const dogInList = state.dogsListByBreed[dogIndex];
+
+  if (dogInList) {
+    state.dogsListByBreed[dogIndex] = Object.assign(dogInList, dogToUpdate);
+  }
+};
+
+const updateFavoriteState = (state, { dog, favoriteState }) => {
+  const updatedDog = { ...dog, isFavorite: favoriteState };
+
+  updateStorageFavorites(state.dogBreedsFavorites);
+  UPDATE_ELEMENT_DOG_BREEDS_LIST(state, updatedDog);
+  UPDATE_ELEMENT_DOGS_LIST_BY_BREED(state, updatedDog);
+};
+
 export default {
   namespaced: true,
 
@@ -62,36 +92,13 @@ export default {
         ...dog,
         isFavorite: favoriteState,
       });
-      localStorage.setItem(LOCAL_STORAGE_KEYS.DogBreedsFavorites, JSON.stringify(state.dogBreedsFavorites));
-
-      // TODO: refactor it
-      const dogIndex = state.dogBreedsList.findIndex(({ img }) => img === dog.img);
-      const dogInList = state.dogBreedsList[dogIndex];
-      if (dogInList) {
-        dogInList.isFavorite = favoriteState;
-      }
+      updateFavoriteState(state, { dog, favoriteState });
     },
 
     REMOVE_DOG_BREEDS_ITEM_FROM_FAVOURITE(state, { dog, favoriteState }) {
       const favoriteDogIndex = state.dogBreedsFavorites.findIndex(({ img }) => img === dog.img);
       state.dogBreedsFavorites.splice(favoriteDogIndex, 1);
-      localStorage.setItem(LOCAL_STORAGE_KEYS.DogBreedsFavorites, JSON.stringify(state.dogBreedsFavorites));
-
-      // TODO: refactor it
-      const dogIndex = state.dogBreedsList.findIndex(({ img }) => img === dog.img);
-      const dogInList = state.dogBreedsList[dogIndex];
-      if (dogInList) {
-        dogInList.isFavorite = favoriteState;
-      }
-    },
-
-    UPDATE_ELEMENT_DOG_BREEDS_LIST(state, dogToUpdate) {
-      const dogIndex = state.dogBreedsList.findIndex(({ key }) => key === dogToUpdate.key);
-      const dogInList = state.dogBreedsList[dogIndex];
-
-      if (dogInList) {
-        state.dogBreedsList[dogIndex] = Object.assign(dogInList, dogToUpdate);
-      }
+      updateFavoriteState(state, { dog, favoriteState });
     },
 
     SET_DOG_BREED_IMAGE_IN_LIST(state, { dog, dogImg }) {
@@ -102,6 +109,9 @@ export default {
         dogInList.img = dogImg;
       }
     },
+
+    UPDATE_ELEMENT_DOG_BREEDS_LIST,
+    UPDATE_ELEMENT_DOGS_LIST_BY_BREED,
   },
 
   actions: {

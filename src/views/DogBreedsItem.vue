@@ -23,7 +23,7 @@
             :img="dog.img"
             :name="dog.name"
             :is-favorite="dog.isFavorite"
-            @favorite="(favoriteState) => handleFavouriteStateChange(favoriteState, dog)"
+            @favorite="(favoriteState) => handleFavouriteStateChange({ dog, favoriteState })"
           />
         </MediaCardsGrid>
       </InfiniteScroll>
