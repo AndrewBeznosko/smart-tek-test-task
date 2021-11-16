@@ -122,6 +122,7 @@ export default {
 
     async fetchDogBreedImageRandom({ commit }, dog) {
       const { breed, subBreed } = dog;
+      commit('SET_DOG_BREED_IMAGE_IN_LIST', { dog, dogImg: null });
       const dogImg = await fetchDogBreedImages({
         breed,
         subBreed,

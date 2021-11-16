@@ -1,0 +1,6 @@
+.fade-enter-active, .fade-leave-active {
+  transition: opacity calc(var(--animation-time)*2);
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}

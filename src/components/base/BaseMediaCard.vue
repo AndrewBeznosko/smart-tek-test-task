@@ -13,12 +13,16 @@
         height="26"
       />
     </button>
-    <img
-      v-if="img"
-      :src="img"
-      :alt="name"
-      class="media-card__img"
-    />
+    <transition name="fade">
+      <img
+        v-if="img"
+        v-show="isImgLoaded"
+        :src="img"
+        :alt="name"
+        class="media-card__img"
+        @load="onImgLoad"
+      />
+    </transition>
     <div class="media-card__name-block">
       <router-link
         v-if="Boolean(navigateTo)"
@@ -49,9 +53,19 @@ export default {
     name: String,
   },
 
+  data: () => ({
+    isImgLoaded: false,
+  }),
+
   computed: {
     isFavoriteIcon() {
       return this.isFavorite ? 'heart-fill' : 'heart';
+    },
+  },
+
+  methods: {
+    onImgLoad() {
+      this.isImgLoaded = true;
     },
   },
 };
@@ -61,7 +75,6 @@ export default {
   .media-card {
     height: 29rem;
     position: relative;
-    background-color: var(--white);
     border-radius: 0.8rem;
     overflow: hidden;
     z-index: 1;
