@@ -74,17 +74,21 @@ export default {
 
 <style lang="scss" scoped>
   .media-card {
-    height: 29rem;
+    height: 24rem;
     position: relative;
     border-radius: 0.8rem;
     overflow: hidden;
     z-index: 1;
     $this: &;
 
+    @include tablet-and-more {
+      height: 29rem;
+    }
+
     &__favorite-button {
       position: absolute;
-      top: 2rem;
-      left: 2rem;
+      top: 1rem;
+      left: 1rem;
       padding: 0.5rem;
       cursor: pointer;
       filter: drop-shadow(0 0 1rem rgba(0,0,0,.7));
@@ -92,6 +96,11 @@ export default {
 
       &:hover {
         transform: scale(1.2);
+      }
+
+      @include tablet-and-more {
+        top: 2rem;
+        left: 2rem;
       }
     }
 
@@ -117,15 +126,21 @@ export default {
       width: 100%;
       height: 100%;
       font-weight: 600;
-      font-size: 2.5rem;
-      line-height: 2.8rem;
+      font-size: 2rem;
+      line-height: 2.4rem;
       letter-spacing: 0.01em;
       text-transform: capitalize;
       color: var(--white);
       text-decoration: none;
-      padding: 2.5rem;
+      padding: 2rem;
       box-sizing: border-box;
       background: linear-gradient(1.26deg, var(--black) -5.53%, rgba(0, 0, 0, 0) 54.45%);
+
+      @include tablet-and-more {
+        font-size: 2.5rem;
+        line-height: 2.8rem;
+        padding: 2.5rem;
+      }
     }
 
     &__name-link {
@@ -142,17 +157,32 @@ export default {
     }
 
     &--lg {
-      height: 51.3rem;
+      height: 30rem;
+
+      @include tablet-and-more {
+        height: 51.3rem;
+      }
 
       #{$this}__name-block {
-        font-size: 3rem;
+        font-size: 2.5rem;
         line-height: 2.8rem;
-        padding: 5rem;
+        padding: 2.5rem;
+
+        @include tablet-and-more {
+          font-size: 3rem;
+          line-height: 2.8rem;
+          padding: 5rem;
+        }
       }
 
       #{$this}__favorite-button {
-        top: 3rem;
-        left: 3rem;
+        top: 2rem;
+        left: 2rem;
+
+        @include tablet-and-more {
+          top: 3rem;
+          left: 3rem;
+        }
       }
     }
   }

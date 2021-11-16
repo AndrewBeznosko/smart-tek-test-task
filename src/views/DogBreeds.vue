@@ -1,11 +1,14 @@
 <template>
-  <div class="breeds-page">
+  <div class="breeds">
     <template v-if="dogBreedsList.length">
       <DogBreedsControlPanel>
         <template #right-controls>
           <BaseSwitch v-model="sortByAlphabet">
             <template #label-before>
-              Сортировка по алфавиту
+              <span>
+                <span class="breeds__sort-word">Сортировка</span>
+                по алфавиту
+              </span>
             </template>
           </BaseSwitch>
         </template>
@@ -15,7 +18,7 @@
         :items="dogList"
         :limit-by="20"
       >
-        <MediaCardsGrid class="breeds-page__dogs-grid" has-first-media-large>
+        <MediaCardsGrid has-first-media-large>
           <DogBreedsCard
             v-for="(dog, index) in dogListLimited"
             :key="dog.key"
@@ -67,3 +70,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .breeds {
+    &__sort-word {
+      display: none;
+
+      @include tablet-and-more {
+        display: inline;
+      }
+    }
+  }
+</style>

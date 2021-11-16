@@ -17,7 +17,7 @@
         :items="dogsListByBreed"
         :limit-by="20"
       >
-        <MediaCardsGrid class="breeds-page__dogs-grid">
+        <MediaCardsGrid>
           <MediaCard
             v-for="dog in dogsListByBreedLimited"
             :key="dog.img"

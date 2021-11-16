@@ -23,3 +23,7 @@ $primary--hover: darken(#235d79, $amount) !default;
 $success--hover: darken(#58b58b, $amount) !default;
 $warning--hover: darken(#f0a744, $amount) !default;
 $danger--hover: darken(#d85243, $amount) !default;
+
+// break points
+$bp_tablet_and_more: '(min-width: 768px)';
+$bp_tablet_less_more: '(min-width: 767.9px)';

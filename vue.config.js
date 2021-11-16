@@ -22,4 +22,14 @@ module.exports = {
         symbolId: 'icon-[name]',
       });
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `
+          @import "@/assets/scss/abstracts/_variables.scss";
+          @import "@/assets/scss/abstracts/_mixins.scss";
+        `,
+      },
+    },
+  },
 };

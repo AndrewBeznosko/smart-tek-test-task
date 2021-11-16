@@ -1,0 +1,11 @@
+@mixin tablet-and-more() {
+  @media screen and #{$bp_tablet_and_more} {
+    @content;
+  }
+}
+
+@mixin tablet-less-more() {
+  @media screen and #{$bp_tablet_less_more} {
+    @content;
+  }
+}

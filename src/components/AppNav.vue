@@ -2,7 +2,11 @@
   <nav class="app-nav">
     <div class="app-container app-nav__container">
       <router-link :to="breedsRoute">
-        <img src="@/assets/logo.svg" alt="Pesel logo" />
+        <img
+          src="@/assets/logo.svg"
+          alt="Pesel logo"
+          class="app-nav__logo"
+        />
       </router-link>
       <router-link
         class="app-nav__favourite-link"
@@ -38,20 +42,33 @@ export default {
 
 <style lang="scss" scoped>
   .app-nav {
-    height: 10rem;
+    height: 5rem;
     position: sticky;
     top: 0;
     left: 0;
     background: var(--secondary);
     box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.55);
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     z-index: 99;
+
+    @include tablet-and-more {
+      height: 10rem;
+      margin-bottom: 5rem;
+    }
 
     &__container {
       display: flex;
       justify-content: space-between;
       align-items: center;
       height: 100%;
+    }
+
+    &__logo {
+      height: 2rem;
+
+      @include tablet-and-more {
+        height: initial;
+      }
     }
 
     &__favourite-link {
