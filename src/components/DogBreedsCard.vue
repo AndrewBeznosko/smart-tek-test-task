@@ -4,6 +4,7 @@
     :name="dog.name"
     :is-favorite="dog.isFavorite"
     :navigate-to="dogBreedRoute"
+    :lg-size="lgSize"
     @favorite="(favoriteState) => handleFavouriteStateChange({ favoriteState, dog })"
   />
 </template>
@@ -20,6 +21,10 @@ export default {
       type: Object,
       default: () => ({}),
       required: true,
+    },
+    lgSize: {
+      type: Boolean,
+      default: false,
     },
   },
 

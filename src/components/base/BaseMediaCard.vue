@@ -1,5 +1,8 @@
 <template>
-  <div class="media-card">
+  <div
+    class="media-card"
+    :class="{ 'media-card--lg': lgSize }"
+  >
     <button
       class="media-card__favorite-button"
       @click="$emit('favorite', !isFavorite)"
@@ -37,6 +40,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    lgSize: {
+      type: Boolean,
+      default: false,
+    },
     navigateTo: [Object, String],
     img: String,
     name: String,
@@ -58,6 +65,7 @@ export default {
     border-radius: 0.8rem;
     overflow: hidden;
     z-index: 1;
+    $this: &;
 
     &__favorite-button {
       position: absolute;
@@ -111,6 +119,21 @@ export default {
 
       &:hover {
         text-decoration: underline;
+      }
+    }
+
+    &--lg {
+      height: 51.3rem;
+
+      #{$this}__name-block {
+        font-size: 3rem;
+        line-height: 2.8rem;
+        padding: 5rem;
+      }
+
+      #{$this}__favorite-button {
+        top: 3rem;
+        left: 3rem;
       }
     }
   }

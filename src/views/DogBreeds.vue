@@ -15,12 +15,13 @@
         :items="dogList"
         :limit-by="20"
       >
-        <MediaCardsGrid class="breeds-page__dogs-grid">
+        <MediaCardsGrid class="breeds-page__dogs-grid" has-first-media-large>
           <DogBreedsCard
-            v-for="dog in dogListLimited"
+            v-for="(dog, index) in dogListLimited"
             :key="dog.key"
             class="cell"
             :dog="dog"
+            :lg-size="index === 0"
           />
         </MediaCardsGrid>
       </InfiniteScroll>

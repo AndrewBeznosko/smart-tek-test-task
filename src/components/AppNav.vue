@@ -42,7 +42,7 @@ export default {
     position: sticky;
     top: 0;
     left: 0;
-    background: #151419;
+    background: var(--secondary);
     box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.55);
     margin-bottom: 5rem;
     z-index: 99;

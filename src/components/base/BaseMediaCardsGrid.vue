@@ -35,8 +35,9 @@ export default {
     gap: 3rem;
 
     &--first-card-large {
-      &:first-child {
-        // TODO: large style
+      &>:first-child {
+        grid-column-start: 1;
+        grid-column-end: 4;
       }
     }
   }

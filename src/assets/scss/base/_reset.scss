@@ -17,6 +17,20 @@ body {
   font-size: 1.6rem;
   background: var(--gray-400) linear-gradient(180deg, var(--gray-400) 0%, var(--gray-800) 99.09%);
   min-height: 100vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: .7rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--light);
+    outline: 1px solid var(--light);
+  }
 }
 
 button {
