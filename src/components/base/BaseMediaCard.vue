@@ -60,7 +60,7 @@ export default {
     z-index: 1;
 
     &__favorite-button {
-      position: absolute; // TODO: add mixin to position property
+      position: absolute;
       top: 2rem;
       left: 2rem;
       padding: 0.5rem;
