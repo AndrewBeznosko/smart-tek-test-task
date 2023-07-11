@@ -37,7 +37,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import shuffle from 'lodash.shuffle';
+import {shuffle} from 'lodash-es';
 import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
 import DogBreedsCard from '@/components/DogBreedsCard.vue';
 import BaseSwitch from '@/components/base/BaseSwitch.vue';

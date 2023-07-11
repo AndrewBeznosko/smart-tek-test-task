@@ -10,16 +10,13 @@
   "dependencies": {
     "axios": "^0.24.0",
     "lodash-es": "^4.17.21",
-    "lodash.camelcase": "^4.3.0",
-    "lodash.shuffle": "^4.2.0",
-    "lodash.upperfirst": "^4.3.1",
     "normalize.css": "^8.0.1",
-    "vue": "2.7.14",
-    "vue-router": "^3.2.0",
-    "vuex": "^3.4.0"
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue2": "^2.2.0",
+    "@vitejs/plugin-vue": "^4.2.3",
     "sass": "^1.63.6",
     "svg-sprite-loader": "^6.0.11",
     "typescript": "^5.1.6",

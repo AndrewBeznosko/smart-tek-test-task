@@ -30,9 +30,8 @@
           @click.native="navigateToAllBreeds"
         />
         <div class="control-panel__breeds-list">
-          <template v-for="(group, key) in dogBreedsGroupedAlphabetically">
+          <template v-for="(group, key) in dogBreedsGroupedAlphabetically" :key="key">
             <div
-              :key="key"
               class="control-panel__breeds-alphabet-group-letter"
               v-text="key"
             />

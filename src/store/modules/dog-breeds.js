@@ -1,4 +1,4 @@
-import upperFirst from 'lodash.upperfirst';
+import {upperFirst} from 'lodash-es';
 import { fetchDogBreedImages, fetchDogBreedsList } from '@/api/dog-breeds/dog-breeds';
 import LOCAL_STORAGE_KEYS from '@/constants/local-storage.consstants';
 
