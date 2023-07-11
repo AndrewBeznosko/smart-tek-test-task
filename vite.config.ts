@@ -21,13 +21,13 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-          @import "@/assets/scss/abstracts/_variables.scss";
+          @import "@/assets/scss/abstracts/_sass-variables.scss";
           @import "@/assets/scss/abstracts/_mixins.scss";
         `,
       },
       sass: {
         additionalData: `
-          @import "@/assets/scss/abstracts/_variables.scss";
+          @import "@/assets/scss/abstracts/_sass-variables.scss";
           @import "@/assets/scss/abstracts/_mixins.scss";
         `,
       },
