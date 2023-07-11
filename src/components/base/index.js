@@ -1,24 +1,17 @@
 import Vue from 'vue';
-import upperFirst from 'lodash.upperfirst';
-import camelCase from 'lodash.camelcase';
+import { kebabCase } from 'lodash-es';
 
-const requireComponent = require.context(
-  '/',
-  false,
-  /Base[A-Z]\w+\.(vue|js)$/,
-);
+const baseGlobalComponents = import.meta.glob(['./*.vue', './*.js'], {
+  import: 'default',
+  eager: true,
+});
 
-requireComponent.keys().forEach((fileName) => {
-  const componentConfig = requireComponent(fileName);
-
-  const componentName = upperFirst(
-    camelCase(
-      componentConfig.default.name
-        .split('/')
-        .pop()
-        .replace(/\.\w+$/, ''),
-    ),
+Object.entries(baseGlobalComponents).forEach(([path, component]) => {
+  const componentName = kebabCase(path
+    .split('/')
+    .pop()
+    .replace(/\.\w+$/, ''),
   );
 
-  Vue.component(componentName, componentConfig.default || componentConfig);
+  Vue.component(componentName, component);
 });

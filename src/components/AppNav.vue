@@ -14,7 +14,7 @@
         :to="breedsFavoritesRoute"
       >
         Избранные пёсели
-        <SvgIcon
+        <BaseSvgIcon
           name="heart"
           width="16"
           height="14"
@@ -26,9 +26,11 @@
 
 <script>
 import ROUTE from '@/constants/route-names.constants';
+import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
 
 export default {
   name: 'AppNav',
+  components: {BaseSvgIcon},
   computed: {
     breedsFavoritesRoute() {
       return { name: ROUTE.BreedsFavorites };

@@ -3,16 +3,19 @@
     <slot :items="itemsLimited" />
 
     <div ref="Loader" class="infinite-scroll__loader">
-      <Loader v-if="isShowLoader" />
+      <BaseLoader v-if="isShowLoader" />
     </div>
   </div>
 </template>
 
 <script>
+import BaseLoader from '@/components/base/BaseLoader.vue';
+
 const LOADING_DELAY = 1000;
 
 export default {
-  name: 'InfiniteScroll',
+  name: 'BaseInfiniteScroll',
+  components: {BaseLoader},
 
   props: {
     items: {

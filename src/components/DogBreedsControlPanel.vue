@@ -8,7 +8,7 @@
           @click="toggleBreedsListVisibility"
         >
           Породы
-          <SvgIcon
+          <BaseSvgIcon
             class="control-panel__breed-btn-icon"
             :class="{ 'control-panel__breed-btn-icon--opened': isBreedsListVisible }"
             name="arrow-down"
@@ -54,9 +54,12 @@
 <script>
 import { mapGetters } from 'vuex';
 import ROUTE from '@/constants/route-names.constants';
+import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
+import BaseBadge from '@/components/base/BaseBadge.vue';
 
 export default {
   name: 'DogBreedsControlPanel',
+  components: {BaseBadge, BaseSvgIcon},
 
   props: {
     activeDogBreed: {

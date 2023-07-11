@@ -1,5 +1,5 @@
 <template>
-  <MediaCard
+  <BaseMediaCard
     :img="dog.img"
     :name="dog.name"
     :is-favorite="dog.isFavorite"
@@ -12,9 +12,11 @@
 <script>
 import { mapActions } from 'vuex';
 import ROUTE from '@/constants/route-names.constants';
+import BaseMediaCard from '@/components/base/BaseMediaCard.vue';
 
 export default {
   name: 'DogBreedsCard',
+  components: {BaseMediaCard},
 
   props: {
     dog: {

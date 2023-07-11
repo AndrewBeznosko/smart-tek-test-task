@@ -1,13 +1,13 @@
 <template>
   <div class="breeds-favorites">
-    <InfiniteScroll
+    <BaseInfiniteScroll
       v-if="dogBreedsFavorites.length"
       v-slot="{ items: dogBreedsFavoritesLimited }"
       :items="dogBreedsFavorites"
       :limit-by="20"
     >
-      <MediaCardsGrid>
-        <MediaCard
+      <BaseMediaCardsGrid>
+        <BaseMediaCard
           v-for="dog in dogBreedsFavoritesLimited"
           :key="dog.img"
           :img="dog.img"
@@ -16,8 +16,8 @@
           :navigate-to="dogBreedRoute(dog)"
           @favorite="(favoriteState) => handleFavouriteStateChange({ favoriteState, dog })"
         />
-      </MediaCardsGrid>
-    </InfiniteScroll>
+      </BaseMediaCardsGrid>
+    </BaseInfiniteScroll>
     <h2 v-if="!dogBreedsFavorites.length">
       There is no favorite image
     </h2>
@@ -27,9 +27,13 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import ROUTE from '@/constants/route-names.constants';
+import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue';
+import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue';
+import BaseMediaCard from '@/components/base/BaseMediaCard.vue';
 
 export default {
   name: 'DogBreedsFavorites',
+  components: {BaseMediaCard, BaseMediaCardsGrid, BaseInfiniteScroll},
 
   computed: {
     ...mapGetters('dogBreeds', ['dogBreedsFavorites']),
