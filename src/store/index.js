@@ -2,11 +2,13 @@ import { createStore } from 'vuex'
 // modules
 import dogBreeds from './modules/dog-breeds';
 
-export default createStore({
+const store = createStore({
   state: {},
   mutations: {},
   actions: {},
   modules: {
     dogBreeds,
   },
-});
+})
+
+export default store;
