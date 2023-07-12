@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import ROUTE from '@/constants/route-names.constants';
+import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue';
+import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue';
+import BaseMediaCard from '@/components/base/BaseMediaCard.vue';
+import {computed} from 'vue';
+import vuexStore from '@/store/index.js';
+
+const dogBreedsFavorites = computed(() => vuexStore.getters['dogBreeds/dogBreedsFavorites']);
+const handleFavouriteStateChange = ({ dog, favoriteState }) => vuexStore.dispatch('dogBreeds/handleFavouriteStateChange', { dog, favoriteState });
+
+const dogBreedRoute = computed(() => {
+  return ({ key }) => ({
+    name: ROUTE.BreedsItem,
+    params: { breed: key },
+  });
+});
+</script>
+
 <template>
   <div class="breeds-favorites">
     <BaseInfiniteScroll
@@ -23,31 +42,3 @@
     </h2>
   </div>
 </template>
-
-<script>
-import { mapActions, mapGetters } from 'vuex';
-import ROUTE from '@/constants/route-names.constants';
-import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue';
-import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue';
-import BaseMediaCard from '@/components/base/BaseMediaCard.vue';
-
-export default {
-  name: 'DogBreedsFavorites',
-  components: {BaseMediaCard, BaseMediaCardsGrid, BaseInfiniteScroll},
-
-  computed: {
-    ...mapGetters('dogBreeds', ['dogBreedsFavorites']),
-
-    dogBreedRoute() {
-      return ({ key }) => ({
-        name: ROUTE.BreedsItem,
-        params: { breed: key },
-      });
-    },
-  },
-
-  methods: {
-    ...mapActions('dogBreeds', ['handleFavouriteStateChange']),
-  },
-};
-</script>

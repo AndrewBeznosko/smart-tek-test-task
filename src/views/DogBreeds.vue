@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import {shuffle} from 'lodash-es';
+import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
+import DogBreedsCard from '@/components/DogBreedsCard.vue';
+import BaseSwitch from '@/components/base/BaseSwitch.vue';
+import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue';
+import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue';
+import {computed, ref} from 'vue';
+import vuexStore from '@/store/index.js';
+
+const dogBreedsList = computed(() => vuexStore.getters['dogBreeds/dogBreedsList']);
+const fetchDogBreedsList = () => vuexStore.dispatch('dogBreeds/fetchDogBreedsList');
+
+const sortByAlphabet = ref(false);
+const dogList = computed(() => sortByAlphabet.value
+  ? dogBreedsList.value
+  : shuffle(dogBreedsList.value)
+);
+
+fetchDogBreedsList();
+</script>
+
 <template>
   <div class="breeds">
     <template v-if="dogBreedsList.length">
@@ -34,48 +56,6 @@
     </h2>
   </div>
 </template>
-
-<script>
-import { mapActions, mapGetters } from 'vuex';
-import {shuffle} from 'lodash-es';
-import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
-import DogBreedsCard from '@/components/DogBreedsCard.vue';
-import BaseSwitch from '@/components/base/BaseSwitch.vue';
-import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue';
-import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue';
-
-export default {
-  name: 'DogBreeds',
-
-  components: {
-    BaseMediaCardsGrid,
-    BaseInfiniteScroll,
-    BaseSwitch,
-    DogBreedsControlPanel,
-    DogBreedsCard,
-  },
-
-  data: () => ({
-    sortByAlphabet: false,
-  }),
-
-  computed: {
-    ...mapGetters('dogBreeds', ['dogBreedsList']),
-
-    dogList() {
-      return this.sortByAlphabet ? this.dogBreedsList : shuffle(this.dogBreedsList);
-    },
-  },
-
-  methods: {
-    ...mapActions('dogBreeds', ['fetchDogBreedsList']),
-  },
-
-  created() {
-    this.fetchDogBreedsList();
-  },
-};
-</script>
 
 <style lang="scss" scoped>
   .breeds {
