@@ -11,14 +11,14 @@
       </template>
     </DogBreedsControlPanel>
     <transition name="fade">
-      <InfiniteScroll
+      <BaseInfiniteScroll
         v-if="isShowDogs"
         v-slot="{ items: dogsListByBreedLimited }"
         :items="dogsListByBreed"
         :limit-by="20"
       >
-        <MediaCardsGrid>
-          <MediaCard
+        <BaseMediaCardsGrid>
+          <BaseMediaCard
             v-for="dog in dogsListByBreedLimited"
             :key="dog.img"
             :img="dog.img"
@@ -26,8 +26,8 @@
             :is-favorite="dog.isFavorite"
             @favorite="(favoriteState) => handleFavouriteStateChange({ dog, favoriteState })"
           />
-        </MediaCardsGrid>
-      </InfiniteScroll>
+        </BaseMediaCardsGrid>
+      </BaseInfiniteScroll>
     </transition>
   </div>
 </template>
@@ -36,11 +36,19 @@
 import { mapActions, mapGetters } from 'vuex';
 import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
 import ROUTE from '@/constants/route-names.constants';
+import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue';
+import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue';
+import BaseMediaCard from '@/components/base/BaseMediaCard.vue';
+import BaseBadge from '@/components/base/BaseBadge.vue';
 
 export default {
   name: 'DogBreedsItem',
 
   components: {
+    BaseBadge,
+    BaseMediaCard,
+    BaseMediaCardsGrid,
+    BaseInfiniteScroll,
     DogBreedsControlPanel,
   },
 

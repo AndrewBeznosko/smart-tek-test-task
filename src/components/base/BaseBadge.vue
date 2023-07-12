@@ -6,7 +6,7 @@
     :class="{ 'badge--active': isActive }"
   >
     {{ name }}
-    <SvgIcon
+    <BaseSvgIcon
       v-if="icon"
       :name="icon"
       width="6"
@@ -16,8 +16,11 @@
 </template>
 
 <script>
+import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
+
 export default {
   name: 'BaseBadge',
+  components: {BaseSvgIcon},
 
   props: {
     name: String,

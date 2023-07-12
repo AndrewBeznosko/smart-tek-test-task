@@ -8,7 +8,7 @@
           @click="toggleBreedsListVisibility"
         >
           Породы
-          <SvgIcon
+          <BaseSvgIcon
             class="control-panel__breed-btn-icon"
             :class="{ 'control-panel__breed-btn-icon--opened': isBreedsListVisible }"
             name="arrow-down"
@@ -30,9 +30,8 @@
           @click.native="navigateToAllBreeds"
         />
         <div class="control-panel__breeds-list">
-          <template v-for="(group, key) in dogBreedsGroupedAlphabetically">
+          <template v-for="(group, key) in dogBreedsGroupedAlphabetically" :key="key">
             <div
-              :key="key"
               class="control-panel__breeds-alphabet-group-letter"
               v-text="key"
             />
@@ -54,9 +53,12 @@
 <script>
 import { mapGetters } from 'vuex';
 import ROUTE from '@/constants/route-names.constants';
+import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
+import BaseBadge from '@/components/base/BaseBadge.vue';
 
 export default {
   name: 'DogBreedsControlPanel',
+  components: {BaseBadge, BaseSvgIcon},
 
   props: {
     activeDogBreed: {

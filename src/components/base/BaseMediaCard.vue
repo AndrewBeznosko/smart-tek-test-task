@@ -7,7 +7,7 @@
       class="media-card__favorite-button"
       @click="$emit('favorite', !isFavorite)"
     >
-      <SvgIcon
+      <BaseSvgIcon
         class="media-card__favorite-icon"
         :name="isFavoriteIcon"
         width="29"
@@ -37,8 +37,11 @@
 </template>
 
 <script>
+import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
+
 export default {
-  name: 'MediaCard',
+  name: 'BaseMediaCard',
+  components: {BaseSvgIcon},
 
   props: {
     isFavorite: {
