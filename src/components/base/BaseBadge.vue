@@ -1,36 +1,42 @@
-<script>
+<script setup lang="ts">
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
 
-export default {
-  name: 'BaseBadge',
-  components: { BaseSvgIcon },
-
-  props: {
-    name: String,
-    icon: String,
-    tag: {
-      type: String,
-      default: 'button',
-    },
-    isActive: {
-      type: Boolean,
-      default: false,
-    },
-  },
+export interface Props {
+  name: string
+  icon: string
+  tag: string
+  isActive: boolean
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  tag: 'button',
+})
+
+// const props = defineProps({
+//   name: String,
+//   icon: String,
+//   tag: {
+//     type: String,
+//     default: 'button',
+//   },
+//   isActive: {
+//     type: Boolean,
+//     default: false,
+//   },
+// })
 </script>
 
 <template>
   <component
-    :is="tag"
+    :is="props.tag"
     type="button"
     class="badge"
-    :class="{ 'badge--active': isActive }"
+    :class="{ 'badge--active': props.isActive }"
   >
     {{ name }}
     <BaseSvgIcon
-      v-if="icon"
-      :name="icon"
+      v-if="props.icon"
+      :name="props.icon"
       width="6"
       height="6"
     />

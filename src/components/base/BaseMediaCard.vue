@@ -1,40 +1,23 @@
-<script>
+<script setup>
+import { computed, ref } from 'vue'
+import type { RouteLocationRaw } from 'vue-router'
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
 
-export default {
-  name: 'BaseMediaCard',
-  components: { BaseSvgIcon },
+const props = defineProps<{
+  isFavorite: boolean
+  lgSize?: boolean
+  navigateTo?: string | RouteLocationRaw
+  img: string
+  name: string
+}>()
 
-  props: {
-    isFavorite: {
-      type: Boolean,
-      default: false,
-    },
-    lgSize: {
-      type: Boolean,
-      default: false,
-    },
-    navigateTo: [Object, String],
-    img: String,
-    name: String,
-  },
+const emit = defineEmits<{
+  favorite: [isFavorite: boolean]
+}>()
 
-  data: () => ({
-    isImgLoaded: false,
-  }),
-
-  computed: {
-    isFavoriteIcon() {
-      return this.isFavorite ? 'heart-fill' : 'heart'
-    },
-  },
-
-  methods: {
-    onImgLoad() {
-      this.isImgLoaded = true
-    },
-  },
-}
+const isImgLoaded = ref(false)
+const isFavoriteIcon = computed(() => props.isFavorite ? 'heart-fill' : 'heart')
+const onImgLoad = () => isImgLoaded.value = true
 </script>
 
 <template>
@@ -44,7 +27,7 @@ export default {
   >
     <button
       class="media-card__favorite-button"
-      @click="$emit('favorite', !isFavorite)"
+      @click="emit('favorite', !isFavorite)"
     >
       <BaseSvgIcon
         class="media-card__favorite-icon"
