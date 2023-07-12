@@ -1,3 +1,44 @@
+<script setup>
+import { computed, onMounted, watchEffect } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue'
+import ROUTE_NAMES from '@/constants/route-names.constants'
+import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue'
+import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue'
+import BaseMediaCard from '@/components/base/BaseMediaCard.vue'
+import BaseBadge from '@/components/base/BaseBadge.vue'
+import vuexStore from '@/store/index.js'
+
+const router = useRouter()
+const route = useRoute()
+
+const getDogBreedByKey = computed(() => vuexStore.getters['dogBreeds/getDogBreedByKey'])
+const dogBreedsList = computed(() => vuexStore.getters['dogBreeds/dogBreedsList'])
+const dogsListByBreed = computed(() => vuexStore.getters['dogBreeds/dogsListByBreed'])
+const fetchDogBreedsList = ({ dog, favoriteState }) => vuexStore.dispatch('dogBreeds/fetchDogBreedsList', { dog, favoriteState })
+const handleFavouriteStateChange = ({ dog, favoriteState }) => vuexStore.dispatch('dogBreeds/handleFavouriteStateChange', { dog, favoriteState })
+const fetchDogBreedImages = ({ dog, favoriteState }) => vuexStore.dispatch('dogBreeds/fetchDogBreedImages', { dog, favoriteState })
+
+const dogBreedKey = computed(() => route.params?.breed)
+
+const dogBreedInfo = computed(() => getDogBreedByKey.value(dogBreedKey) || {})
+
+const isShowDogs = computed(() => Boolean(dogsListByBreed.value.length))
+
+watchEffect(() => fetchDogBreedImages(dogBreedKey))
+
+function navigateToAllBreeds() {
+  router.push({ name: ROUTE_NAMES.Breeds })
+}
+
+onMounted(async () => {
+  await fetchDogBreedsList()
+
+  if (dogBreedsList.value.length)
+    await fetchDogBreedImages(dogBreedKey)
+})
+</script>
+
 <template>
   <div v-if="dogBreedsList.length">
     <DogBreedsControlPanel :active-dog-breed="dogBreedInfo">
@@ -6,7 +47,7 @@
           :name="dogBreedInfo.name"
           icon="close"
           is-active
-          @click.native="navigateToAllBreeds"
+          @click="navigateToAllBreeds"
         />
       </template>
     </DogBreedsControlPanel>
@@ -31,73 +72,3 @@
     </transition>
   </div>
 </template>
-
-<script>
-import { mapActions, mapGetters } from 'vuex';
-import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
-import ROUTE_NAMES from '@/constants/route-names.constants';
-import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue';
-import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue';
-import BaseMediaCard from '@/components/base/BaseMediaCard.vue';
-import BaseBadge from '@/components/base/BaseBadge.vue';
-
-export default {
-  name: 'DogBreedsItem',
-
-  components: {
-    BaseBadge,
-    BaseMediaCard,
-    BaseMediaCardsGrid,
-    BaseInfiniteScroll,
-    DogBreedsControlPanel,
-  },
-
-  computed: {
-    ...mapGetters('dogBreeds', [
-      'getDogBreedByKey',
-      'dogBreedsList',
-      'dogsListByBreed',
-    ]),
-
-    dogBreedKey() {
-      return this.$route.params?.breed;
-    },
-
-    dogBreedInfo() {
-      return this.getDogBreedByKey(this.dogBreedKey) || {};
-    },
-
-    isShowDogs() {
-      return Boolean(this.dogsListByBreed.length);
-    },
-  },
-
-  watch: {
-    $route: {
-      handler() {
-        this.fetchDogBreedImages(this.dogBreedKey);
-      },
-    },
-  },
-
-  methods: {
-    ...mapActions('dogBreeds', [
-      'fetchDogBreedsList',
-      'handleFavouriteStateChange',
-      'fetchDogBreedImages',
-    ]),
-
-    navigateToAllBreeds() {
-      this.$router.push({ name: ROUTE_NAMES.Breeds });
-    },
-  },
-
-  async created() {
-    await this.fetchDogBreedsList();
-
-    if (this.dogBreedsList.length) {
-      await this.fetchDogBreedImages(this.dogBreedKey);
-    }
-  },
-};
-</script>

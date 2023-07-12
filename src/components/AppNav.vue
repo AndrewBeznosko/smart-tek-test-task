@@ -1,3 +1,21 @@
+<script>
+import ROUTE_NAMES from '@/constants/route-names.constants'
+import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
+
+export default {
+  name: 'AppNav',
+  components: { BaseSvgIcon },
+  computed: {
+    breedsFavoritesRoute() {
+      return { name: ROUTE_NAMES.BreedsFavorites }
+    },
+    breedsRoute() {
+      return { name: ROUTE_NAMES.Breeds }
+    },
+  },
+}
+</script>
+
 <template>
   <nav class="app-nav">
     <div class="app-container app-nav__container">
@@ -23,24 +41,6 @@
     </div>
   </nav>
 </template>
-
-<script>
-import ROUTE_NAMES from '@/constants/route-names.constants';
-import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
-
-export default {
-  name: 'AppNav',
-  components: {BaseSvgIcon},
-  computed: {
-    breedsFavoritesRoute() {
-      return { name: ROUTE_NAMES.BreedsFavorites };
-    },
-    breedsRoute() {
-      return { name: ROUTE_NAMES.Breeds };
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
   .app-nav {

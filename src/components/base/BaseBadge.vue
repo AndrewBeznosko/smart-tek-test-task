@@ -1,3 +1,25 @@
+<script>
+import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
+
+export default {
+  name: 'BaseBadge',
+  components: { BaseSvgIcon },
+
+  props: {
+    name: String,
+    icon: String,
+    tag: {
+      type: String,
+      default: 'button',
+    },
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
+  },
+}
+</script>
+
 <template>
   <component
     :is="tag"
@@ -14,28 +36,6 @@
     />
   </component>
 </template>
-
-<script>
-import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
-
-export default {
-  name: 'BaseBadge',
-  components: {BaseSvgIcon},
-
-  props: {
-    name: String,
-    icon: String,
-    tag: {
-      type: String,
-      default: 'button',
-    },
-    isActive: {
-      type: Boolean,
-      default: false,
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
   .badge {

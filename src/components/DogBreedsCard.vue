@@ -1,22 +1,11 @@
-<template>
-  <BaseMediaCard
-    :img="dog.img"
-    :name="dog.name"
-    :is-favorite="dog.isFavorite"
-    :navigate-to="dogBreedRoute"
-    :lg-size="lgSize"
-    @favorite="(favoriteState) => handleFavouriteStateChange({ favoriteState, dog })"
-  />
-</template>
-
 <script>
-import { mapActions } from 'vuex';
-import ROUTE_NAMES from '@/constants/route-names.constants';
-import BaseMediaCard from '@/components/base/BaseMediaCard.vue';
+import { mapActions } from 'vuex'
+import ROUTE_NAMES from '@/constants/route-names.constants'
+import BaseMediaCard from '@/components/base/BaseMediaCard.vue'
 
 export default {
   name: 'DogBreedsCard',
-  components: {BaseMediaCard},
+  components: { BaseMediaCard },
 
   props: {
     dog: {
@@ -35,7 +24,7 @@ export default {
       return {
         name: ROUTE_NAMES.BreedsItem,
         params: { breed: this.dog.key },
-      };
+      }
     },
   },
 
@@ -44,7 +33,18 @@ export default {
   },
 
   created() {
-    this.fetchDogBreedImageRandom(this.dog);
+    this.fetchDogBreedImageRandom(this.dog)
   },
-};
+}
 </script>
+
+<template>
+  <BaseMediaCard
+    :img="dog.img"
+    :name="dog.name"
+    :is-favorite="dog.isFavorite"
+    :navigate-to="dogBreedRoute"
+    :lg-size="lgSize"
+    @favorite="(favoriteState) => handleFavouriteStateChange({ favoriteState, dog })"
+  />
+</template>

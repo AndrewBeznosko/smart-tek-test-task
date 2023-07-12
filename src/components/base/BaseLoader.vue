@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'BaseLoader',
+}
+</script>
+
 <template>
   <div class="loader">
     <div
@@ -7,12 +13,6 @@
     />
   </div>
 </template>
-
-<script>
-export default {
-  name: 'BaseLoader',
-};
-</script>
 
 <style lang="scss" scoped>
   $animation-time: 1s;

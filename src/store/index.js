@@ -1,6 +1,7 @@
-import { createStore } from 'vuex';
+import { createStore } from 'vuex'
+
 // modules
-import dogBreeds from './modules/dog-breeds';
+import dogBreeds from './modules/dog-breeds'
 
 const vuexStore = createStore({
   state: {},
@@ -9,6 +10,6 @@ const vuexStore = createStore({
   modules: {
     dogBreeds,
   },
-});
+})
 
-export default vuexStore;
+export default vuexStore

@@ -24,7 +24,6 @@ module.exports = {
      * anfu ESlint rules
      * @link https://github.com/antfu/eslint-config/blob/main/packages/eslint-config-vue/index.js
      * ***********************************************************/
-
     'vue/max-attributes-per-line': 'off',
     'vue/no-v-html': 'off',
     'vue/require-prop-types': 'off',

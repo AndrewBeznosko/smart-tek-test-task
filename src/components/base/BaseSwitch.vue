@@ -1,19 +1,3 @@
-<template>
-  <label class="switch" :class="{ 'switch--checked': isChecked }">
-    <slot name="label-before"/>
-    <input
-      class="switch__input"
-      type="checkbox"
-      :checked="isChecked"
-      :value="isChecked"
-      @change="onChangeInput($event.target.checked)"
-      @keydown.enter="onChangeInput($event.target.checked)"
-    />
-    <div class="switch__toggle" />
-    <slot name="label-after"/>
-  </label>
-</template>
-
 <script>
 export default {
   name: 'BaseSwitch',
@@ -25,19 +9,35 @@ export default {
 
   computed: {
     isChecked() {
-      return this.checked || this.value;
+      return this.checked || this.value
     },
   },
 
   methods: {
     onChangeInput(willBeChecked) {
-      this.$emit('input', willBeChecked);
+      this.$emit('input', willBeChecked)
 
-      this.$emit('change', willBeChecked);
+      this.$emit('change', willBeChecked)
     },
   },
-};
+}
 </script>
+
+<template>
+  <label class="switch" :class="{ 'switch--checked': isChecked }">
+    <slot name="label-before" />
+    <input
+      class="switch__input"
+      type="checkbox"
+      :checked="isChecked"
+      :value="isChecked"
+      @change="onChangeInput($event.target.checked)"
+      @keydown.enter="onChangeInput($event.target.checked)"
+    >
+    <div class="switch__toggle" />
+    <slot name="label-after" />
+  </label>
+</template>
 
 <style lang="scss" scoped>
   .switch {

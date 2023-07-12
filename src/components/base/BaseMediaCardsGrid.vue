@@ -1,16 +1,3 @@
-<template>
-  <div
-    class="media-cards-grid"
-    :class="{ 'media-cards-grid--first-card-large': hasFirstMediaLarge }"
-  >
-    <template v-if="!isEmpty"></template>
-    <slot />
-    <div v-if="isEmpty" class="media-cards-grid__empty-list">
-      The list is empty
-    </div>
-  </div>
-</template>
-
 <script>
 export default {
   name: 'BaseMediaCardsGrid',
@@ -25,8 +12,21 @@ export default {
       default: false,
     },
   },
-};
+}
 </script>
+
+<template>
+  <div
+    class="media-cards-grid"
+    :class="{ 'media-cards-grid--first-card-large': hasFirstMediaLarge }"
+  >
+    <template v-if="!isEmpty" />
+    <slot />
+    <div v-if="isEmpty" class="media-cards-grid__empty-list">
+      The list is empty
+    </div>
+  </div>
+</template>
 
 <style lang="scss">
   .media-cards-grid {

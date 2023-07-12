@@ -1,3 +1,42 @@
+<script>
+import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
+
+export default {
+  name: 'BaseMediaCard',
+  components: { BaseSvgIcon },
+
+  props: {
+    isFavorite: {
+      type: Boolean,
+      default: false,
+    },
+    lgSize: {
+      type: Boolean,
+      default: false,
+    },
+    navigateTo: [Object, String],
+    img: String,
+    name: String,
+  },
+
+  data: () => ({
+    isImgLoaded: false,
+  }),
+
+  computed: {
+    isFavoriteIcon() {
+      return this.isFavorite ? 'heart-fill' : 'heart'
+    },
+  },
+
+  methods: {
+    onImgLoad() {
+      this.isImgLoaded = true
+    },
+  },
+}
+</script>
+
 <template>
   <div
     class="media-card"
@@ -22,7 +61,7 @@
         :alt="name"
         class="media-card__img"
         @load="onImgLoad"
-      />
+      >
     </transition>
     <div class="media-card__name-block">
       <router-link
@@ -31,49 +70,12 @@
         class="media-card__name-link"
         v-text="name"
       />
-      <template v-else>{{ name }}</template>
+      <template v-else>
+        {{ name }}
+      </template>
     </div>
   </div>
 </template>
-
-<script>
-import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
-
-export default {
-  name: 'BaseMediaCard',
-  components: {BaseSvgIcon},
-
-  props: {
-    isFavorite: {
-      type: Boolean,
-      default: false,
-    },
-    lgSize: {
-      type: Boolean,
-      default: false,
-    },
-    navigateTo: [Object, String],
-    img: String,
-    name: String,
-  },
-
-  data: () => ({
-    isImgLoaded: false,
-  }),
-
-  computed: {
-    isFavoriteIcon() {
-      return this.isFavorite ? 'heart-fill' : 'heart';
-    },
-  },
-
-  methods: {
-    onImgLoad() {
-      this.isImgLoaded = true;
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
   .media-card {

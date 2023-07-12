@@ -1,3 +1,63 @@
+<script>
+import { mapGetters } from 'vuex'
+import ROUTE_NAMES from '@/constants/route-names.constants'
+import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
+import BaseBadge from '@/components/base/BaseBadge.vue'
+
+export default {
+  name: 'DogBreedsControlPanel',
+  components: { BaseBadge, BaseSvgIcon },
+
+  props: {
+    activeDogBreed: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+
+  data: () => ({
+    isBreedsListVisible: false,
+  }),
+
+  computed: {
+    ...mapGetters('dogBreeds', ['dogBreedsList', 'dogBreedsGroupedAlphabetically']),
+
+    isAllDogBreeds() {
+      return this.$route.name === ROUTE_NAMES.Breeds
+    },
+
+    activeDogBreedKey() {
+      return this.activeDogBreed?.key
+    },
+  },
+
+  methods: {
+    toggleBreedsListVisibility() {
+      this.isBreedsListVisible = !this.isBreedsListVisible
+    },
+    hideBreedsList() {
+      this.isBreedsListVisible = false
+    },
+    navigateToTheBreed(breed) {
+      this.$router.push({
+        name: ROUTE_NAMES.BreedsItem,
+        params: { breed: breed.key },
+      })
+      this.hideBreedsList()
+    },
+    navigateToAllBreeds() {
+      if (this.isAllDogBreeds)
+        return
+
+      this.$router.push({
+        name: ROUTE_NAMES.Breeds,
+      })
+      this.hideBreedsList()
+    },
+  },
+}
+</script>
+
 <template>
   <div class="control-panel">
     <div class="control-panel__row">
@@ -55,65 +115,6 @@
     </transition>
   </div>
 </template>
-
-<script>
-import { mapGetters } from 'vuex';
-import ROUTE_NAMES from '@/constants/route-names.constants';
-import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
-import BaseBadge from '@/components/base/BaseBadge.vue';
-
-export default {
-  name: 'DogBreedsControlPanel',
-  components: {BaseBadge, BaseSvgIcon},
-
-  props: {
-    activeDogBreed: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
-
-  data: () => ({
-    isBreedsListVisible: false,
-  }),
-
-  computed: {
-    ...mapGetters('dogBreeds', ['dogBreedsList', 'dogBreedsGroupedAlphabetically']),
-
-    isAllDogBreeds() {
-      return this.$route.name === ROUTE_NAMES.Breeds;
-    },
-
-    activeDogBreedKey() {
-      return this.activeDogBreed?.key;
-    },
-  },
-
-  methods: {
-    toggleBreedsListVisibility() {
-      this.isBreedsListVisible = !this.isBreedsListVisible;
-    },
-    hideBreedsList() {
-      this.isBreedsListVisible = false;
-    },
-    navigateToTheBreed(breed) {
-      this.$router.push({
-        name: ROUTE_NAMES.BreedsItem,
-        params: { breed: breed.key },
-      });
-      this.hideBreedsList();
-    },
-    navigateToAllBreeds() {
-      if (this.isAllDogBreeds) return;
-
-      this.$router.push({
-        name: ROUTE_NAMES.Breeds,
-      });
-      this.hideBreedsList();
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
   .control-panel {

@@ -1,7 +1,9 @@
-import axios from 'axios';
+import axios from 'axios'
 
-export const initClientInstance = () => axios.create({
-  baseURL: 'https://dog.ceo/api',
-});
+export function initClientInstance() {
+  return axios.create({
+    baseURL: 'https://dog.ceo/api',
+  })
+}
 
-export const apiClient = initClientInstance();
+export const apiClient = initClientInstance()
