@@ -16,21 +16,27 @@
             height="5"
           />
         </button>
-        <slot name="left-controls"/>
+        <slot name="left-controls" />
       </div>
       <div class="control-panel__row-right">
-        <slot name="right-controls"/>
+        <slot name="right-controls" />
       </div>
     </div>
     <transition name="collapse">
-      <div v-if="isBreedsListVisible" class="control-panel__breeds">
+      <div
+        v-if="isBreedsListVisible"
+        class="control-panel__breeds"
+      >
         <BaseBadge
           name="Все пёсели"
           :is-active="isAllDogBreeds"
           @click.native="navigateToAllBreeds"
         />
         <div class="control-panel__breeds-list">
-          <template v-for="(group, key) in dogBreedsGroupedAlphabetically" :key="key">
+          <template
+            v-for="(group, key) in dogBreedsGroupedAlphabetically"
+            :key="key"
+          >
             <div
               class="control-panel__breeds-alphabet-group-letter"
               v-text="key"
@@ -52,7 +58,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import ROUTE from '@/constants/route-names.constants';
+import ROUTE_NAMES from '@/constants/route-names.constants';
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
 import BaseBadge from '@/components/base/BaseBadge.vue';
 
@@ -75,7 +81,7 @@ export default {
     ...mapGetters('dogBreeds', ['dogBreedsList', 'dogBreedsGroupedAlphabetically']),
 
     isAllDogBreeds() {
-      return this.$route.name === ROUTE.Breeds;
+      return this.$route.name === ROUTE_NAMES.Breeds;
     },
 
     activeDogBreedKey() {
@@ -92,7 +98,7 @@ export default {
     },
     navigateToTheBreed(breed) {
       this.$router.push({
-        name: ROUTE.BreedsItem,
+        name: ROUTE_NAMES.BreedsItem,
         params: { breed: breed.key },
       });
       this.hideBreedsList();
@@ -101,7 +107,7 @@ export default {
       if (this.isAllDogBreeds) return;
 
       this.$router.push({
-        name: ROUTE.Breeds,
+        name: ROUTE_NAMES.Breeds,
       });
       this.hideBreedsList();
     },

@@ -1,23 +1,22 @@
 <script setup lang="ts">
-import {shuffle} from 'lodash-es';
-import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
-import DogBreedsCard from '@/components/DogBreedsCard.vue';
-import BaseSwitch from '@/components/base/BaseSwitch.vue';
-import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue';
-import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue';
-import {computed, ref} from 'vue';
-import vuexStore from '@/store/index.js';
+import { shuffle } from 'lodash-es'
+import { computed, ref } from 'vue'
+import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue'
+import DogBreedsCard from '@/components/DogBreedsCard.vue'
+import BaseSwitch from '@/components/base/BaseSwitch.vue'
+import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue'
+import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue'
+import vuexStore from '@/store/index.js'
 
-const dogBreedsList = computed(() => vuexStore.getters['dogBreeds/dogBreedsList']);
-const fetchDogBreedsList = () => vuexStore.dispatch('dogBreeds/fetchDogBreedsList');
+const dogBreedsList = computed(() => vuexStore.getters['dogBreeds/dogBreedsList'])
+const fetchDogBreedsList = () => vuexStore.dispatch('dogBreeds/fetchDogBreedsList')
 
-const sortByAlphabet = ref(false);
+const sortByAlphabet = ref(false)
 const dogList = computed(() => sortByAlphabet.value
   ? dogBreedsList.value
-  : shuffle(dogBreedsList.value)
-);
+  : shuffle(dogBreedsList.value))
 
-fetchDogBreedsList();
+fetchDogBreedsList()
 </script>
 
 <template>

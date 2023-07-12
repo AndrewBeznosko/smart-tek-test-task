@@ -6,7 +6,7 @@
           src="@/assets/logo.svg"
           alt="Pesel logo"
           class="app-nav__logo"
-        />
+        >
       </router-link>
       <router-link
         class="app-nav__favourite-link"
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import ROUTE from '@/constants/route-names.constants';
+import ROUTE_NAMES from '@/constants/route-names.constants';
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue';
 
 export default {
@@ -33,10 +33,10 @@ export default {
   components: {BaseSvgIcon},
   computed: {
     breedsFavoritesRoute() {
-      return { name: ROUTE.BreedsFavorites };
+      return { name: ROUTE_NAMES.BreedsFavorites };
     },
     breedsRoute() {
-      return { name: ROUTE.Breeds };
+      return { name: ROUTE_NAMES.Breeds };
     },
   },
 };

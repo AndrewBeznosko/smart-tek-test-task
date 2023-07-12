@@ -35,7 +35,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue';
-import ROUTE from '@/constants/route-names.constants';
+import ROUTE_NAMES from '@/constants/route-names.constants';
 import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue';
 import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue';
 import BaseMediaCard from '@/components/base/BaseMediaCard.vue';
@@ -88,7 +88,7 @@ export default {
     ]),
 
     navigateToAllBreeds() {
-      this.$router.push({ name: ROUTE.Breeds });
+      this.$router.push({ name: ROUTE_NAMES.Breeds });
     },
   },
 

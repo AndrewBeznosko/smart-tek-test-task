@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import ROUTE from '@/constants/route-names.constants';
-import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue';
-import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue';
-import BaseMediaCard from '@/components/base/BaseMediaCard.vue';
-import {computed} from 'vue';
-import vuexStore from '@/store/index.js';
+import { computed } from 'vue'
+import ROUTE_NAMES from '@/constants/route-names.constants'
+import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue'
+import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue'
+import BaseMediaCard from '@/components/base/BaseMediaCard.vue'
+import vuexStore from '@/store/index.js'
 
-const dogBreedsFavorites = computed(() => vuexStore.getters['dogBreeds/dogBreedsFavorites']);
-const handleFavouriteStateChange = ({ dog, favoriteState }) => vuexStore.dispatch('dogBreeds/handleFavouriteStateChange', { dog, favoriteState });
+const dogBreedsFavorites = computed(() => vuexStore.getters['dogBreeds/dogBreedsFavorites'])
+const handleFavouriteStateChange = ({ dog, favoriteState }) => vuexStore.dispatch('dogBreeds/handleFavouriteStateChange', { dog, favoriteState })
 
 const dogBreedRoute = computed(() => {
   return ({ key }) => ({
-    name: ROUTE.BreedsItem,
+    name: ROUTE_NAMES.BreedsItem,
     params: { breed: key },
-  });
-});
+  })
+})
 </script>
 
 <template>

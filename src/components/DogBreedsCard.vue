@@ -11,7 +11,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import ROUTE from '@/constants/route-names.constants';
+import ROUTE_NAMES from '@/constants/route-names.constants';
 import BaseMediaCard from '@/components/base/BaseMediaCard.vue';
 
 export default {
@@ -33,7 +33,7 @@ export default {
   computed: {
     dogBreedRoute() {
       return {
-        name: ROUTE.BreedsItem,
+        name: ROUTE_NAMES.BreedsItem,
         params: { breed: this.dog.key },
       };
     },

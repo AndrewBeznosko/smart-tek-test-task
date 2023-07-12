@@ -16,6 +16,7 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config-ts": "^0.39.7",
     "@types/lodash-es": "^4.17.7",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@vitejs/plugin-vue": "^4.2.3",
