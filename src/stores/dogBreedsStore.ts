@@ -5,6 +5,7 @@ import { useStorage } from '@vueuse/core'
 import LOCAL_STORAGE_KEYS from '@/constants/local-storage.consstants'
 import * as api from '@/api/dog-breeds/dog-breeds'
 import type { DogBreed } from '@/types/DogBreed'
+import type { DogBreedsList } from '@/api/dog-breeds/dog-breeds'
 
 function getDogBreedsItemTemplate(
   breed: string,
@@ -23,9 +24,9 @@ function getDogBreedsItemTemplate(
   }
 }
 
-function patchAllBreedsList(allBreedsList) {
+function reformatBreedsListToFlatArray(allBreedsList: DogBreedsList): DogBreed[] {
   return Object.entries(allBreedsList)
-    .reduce((accumulator, [breed, subBreeds]) => {
+    .reduce((accumulator: DogBreed[], [breed, subBreeds]) => {
       if (subBreeds.length) {
         const breedsWithSubBreedsArr = subBreeds.map(
           subBreed => getDogBreedsItemTemplate(breed, subBreed),
@@ -40,7 +41,6 @@ function patchAllBreedsList(allBreedsList) {
 
 export const useDogBreedsStore = defineStore('dogBreedsStore', () => {
   const dogBreedsList = ref<DogBreed[]>([])
-  const dogsListByBreed = ref([])
   const dogBreedsFavorites = useStorage<DogBreed[]>(LOCAL_STORAGE_KEYS.DogBreedsFavorites, [])
 
   /** **************************************************
@@ -50,60 +50,24 @@ export const useDogBreedsStore = defineStore('dogBreedsStore', () => {
     return dogBreedsList.value.find(breed => breed.key === key)
   }
 
-  function getDogBreedIndexInFavorites(dogBreed: DogBreed): number {
+  function findDogBreedIndexInFavorites(dogBreed: DogBreed): number {
     return dogBreedsFavorites.value.findIndex(({ key }) => key === dogBreed.key)
   }
 
   function isDogBreedFavorite(dogBreed: DogBreed): boolean {
-    return getDogBreedIndexInFavorites(dogBreed) > -1
-  }
-
-  /** **************************************************
-   * MUTATIONS
-   * **************************************************/
-
-  function SET_DOG_BREED_IMAGE_IN_LIST({ dog, dogImg }) {
-    const dogIndex = dogBreedsList.value.findIndex(({ key }) => key === dog.key)
-    const dogInList = dogBreedsList.value[dogIndex]
-
-    if (dogInList)
-      dogInList.img = dogImg
+    return findDogBreedIndexInFavorites(dogBreed) > -1
   }
 
   /** **************************************************
    * ACTIONS
    * **************************************************/
   async function fetchDogBreedsList() {
-    const allBreedsList = await api.fetchDogBreedsList()
-    dogBreedsList.value = patchAllBreedsList(allBreedsList)
-  }
-
-  async function fetchDogBreedImageRandom(dog) {
-    const { breed, subBreed } = dog
-    SET_DOG_BREED_IMAGE_IN_LIST({ dog, dogImg: null })
-    const dogImg = await api.fetchDogBreedImages({
-      breed,
-      subBreed,
-      isRandom: true,
-    })
-    SET_DOG_BREED_IMAGE_IN_LIST({ dog, dogImg })
-
-    return dogImg
-  }
-
-  async function fetchDogBreedImages(dogBreedKey: string) {
-    const { breed, subBreed } = getDogBreedByKey(dogBreedKey)
-    dogsListByBreed.value = []
-    const dogBreedImages = await api.fetchDogBreedImages({
-      breed,
-      subBreed,
-    })
-
-    dogsListByBreed.value = dogBreedImages.map(dogImage => getDogBreedsItemTemplate(breed, subBreed, dogImage))
+    const breeds = await api.fetchDogBreedsList()
+    dogBreedsList.value = reformatBreedsListToFlatArray(breeds)
   }
 
   function updateDogBreedsFavorites(favoriteState: boolean, dogBreed: DogBreed): void {
-    const index = getDogBreedIndexInFavorites(dogBreed)
+    const index = findDogBreedIndexInFavorites(dogBreed)
 
     if (index > -1)
       dogBreedsFavorites.value.splice(index, 1)
@@ -115,13 +79,10 @@ export const useDogBreedsStore = defineStore('dogBreedsStore', () => {
     // getters
     dogBreedsList,
     dogBreedsFavorites,
-    dogsListByBreed,
     getDogBreedByKey,
     isDogBreedFavorite,
     // actions
     fetchDogBreedsList,
-    fetchDogBreedImageRandom,
-    fetchDogBreedImages,
     updateDogBreedsFavorites,
   }
 })

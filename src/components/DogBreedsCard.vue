@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseMediaCard from '@/components/base/BaseMediaCard.vue'
 import { useDogBreedsStore } from '@/stores/dogBreedsStore'
 import type { DogBreed } from '@/types/DogBreed'
+import { fetchDogRandomImage } from '@/api/dog-breeds/dog-breeds'
 
 const props = defineProps<{
   dog: DogBreed
@@ -11,6 +12,7 @@ const props = defineProps<{
 }>()
 
 const dogBreedsStore = useDogBreedsStore()
+const dogRandomImage = ref<string>('')
 
 const dogBreedRoute = computed(() => {
   return {
@@ -19,14 +21,14 @@ const dogBreedRoute = computed(() => {
   }
 })
 
-onMounted(() => {
-  dogBreedsStore.fetchDogBreedImageRandom(props.dog)
+onMounted(async () => {
+  dogRandomImage.value = await fetchDogRandomImage(props.dog.breed, props.dog.subBreed)
 })
 </script>
 
 <template>
   <BaseMediaCard
-    :img="dog.img"
+    :img="dogRandomImage"
     :name="dog.name"
     :is-favorite="dogBreedsStore.isDogBreedFavorite(dog)"
     :navigate-to="dogBreedRoute"

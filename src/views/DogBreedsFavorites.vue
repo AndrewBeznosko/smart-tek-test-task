@@ -1,19 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue'
 import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue'
-import BaseMediaCard from '@/components/base/BaseMediaCard.vue'
 import { useDogBreedsStore } from '@/stores/dogBreedsStore'
+import DogBreedsCard from '@/components/DogBreedsCard.vue'
 
 const dogBreedsStore = useDogBreedsStore()
-
-const dogBreedRoute = computed(() => {
-  return ({ key }) => ({
-    name: ROUTE_NAMES.BreedsItem,
-    params: { breed: key },
-  })
-})
 </script>
 
 <template>
@@ -25,14 +16,11 @@ const dogBreedRoute = computed(() => {
       :limit-by="20"
     >
       <BaseMediaCardsGrid>
-        <BaseMediaCard
+        <DogBreedsCard
           v-for="dog in dogBreedsFavoritesLimited"
           :key="dog.img"
-          :img="dog.img"
-          :name="dog.name"
-          :is-favorite="dogBreedsStore.isDogBreedFavorite(dog)"
-          :navigate-to="dogBreedRoute(dog)"
-          @update:is-favorite="(isFavorite) => dogBreedsStore.updateDogBreedsFavorites(isFavorite, dog)"
+          dog="dog"
+          is-favorite
         />
       </BaseMediaCardsGrid>
     </BaseInfiniteScroll>

@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { computed, onMounted, watchEffect } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import DogBreedsControlPanel from '@/components/DogBreedsControlPanel.vue'
 import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue'
 import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue'
-import BaseMediaCard from '@/components/base/BaseMediaCard.vue'
 import BaseBadge from '@/components/base/BaseBadge.vue'
 import { useDogBreedsStore } from '@/stores/dogBreedsStore'
+import DogBreedsCard from '@/components/DogBreedsCard.vue'
+import { fetchDogImages } from '@/api/dog-breeds/dog-breeds'
 
 const router = useRouter()
 const route = useRoute()
 
 const dogBreedsStore = useDogBreedsStore()
-const dogBreedKey = computed(() => route.params?.breed)
+const dogBreedKey = computed<string>(() => route.params.breed)
 const dogBreedInfo = computed(() => dogBreedsStore.getDogBreedByKey(dogBreedKey) || {})
-const isShowDogs = computed(() => Boolean(dogBreedsStore.dogsListByBreed.length))
+const dogBreedImages = ref<string[]>([])
+const isShowDogs = computed(() => Boolean(dogBreedImages.value.length))
 
-watchEffect(() => dogBreedsStore.fetchDogBreedImages(dogBreedKey))
+watchEffect(() => fetchDogBreedImages(dogBreedKey.value))
 
 function navigateToAllBreeds() {
   router.push({ name: ROUTE_NAMES.Breeds })
 }
 
-onMounted(async () => {
-  await dogBreedsStore.fetchDogBreedsList()
-
-  if (dogBreedsStore.dogBreedsList.length)
-    await dogBreedsStore.fetchDogBreedImages(dogBreedKey)
-})
+async function fetchDogBreedImages(breed) {
+  const images = await fetchDogImages({ breed })
+  dogBreedImages.value = images as string[]
+}
 </script>
 
 <template>
@@ -46,18 +46,15 @@ onMounted(async () => {
     <transition name="fade">
       <BaseInfiniteScroll
         v-if="isShowDogs"
-        v-slot="{ items: dogsListByBreedLimited }"
-        :items="dogBreedsStore.dogsListByBreed"
+        v-slot="{ items: dogsImages }"
+        :items="dogBreedImages"
         :limit-by="20"
       >
         <BaseMediaCardsGrid>
-          <BaseMediaCard
-            v-for="dog in dogsListByBreedLimited"
-            :key="dog.img"
-            :img="dog.img"
-            :name="dog.name"
-            :is-favorite="dogBreedsStore.isDogBreedFavorite(dog)"
-            @update:is-favorite="(isFavorite) => dogBreedsStore.updateDogBreedsFavorites(isFavorite, dog)"
+          <DogBreedsCard
+            v-for="img in dogsImages"
+            :key="img"
+            :dog="{ img }"
           />
         </BaseMediaCardsGrid>
       </BaseInfiniteScroll>
