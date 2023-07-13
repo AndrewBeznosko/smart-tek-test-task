@@ -1,21 +1,21 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
-import ROUTE from '@/constants/route-names.constants'
+import ROUTE_NAMES from '@/constants/route-names.constants'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: ROUTE.Breeds,
+    name: ROUTE_NAMES.Breeds,
     component: () => import('@/views/DogBreeds.vue'),
   },
   {
     path: '/favorites',
-    name: ROUTE.BreedsFavorites,
+    name: ROUTE_NAMES.BreedsFavorites,
     component: () => import('@/views/DogBreedsFavorites.vue'),
   },
   {
     path: '/:breed',
-    name: ROUTE.BreedsItem,
+    name: ROUTE_NAMES.BreedsItem,
     component: () => import('@/views/DogBreedsItem.vue'),
   },
 ]

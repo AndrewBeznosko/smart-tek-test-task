@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
 import BaseBadge from '@/components/base/BaseBadge.vue'
-import vuexStore from '@/store'
+import { useDogBreedsStore } from '@/stores/dogBreedsStore'
 
 const props = defineProps({
   activeDogBreed: {
@@ -15,7 +15,6 @@ const props = defineProps({
 const router = useRouter()
 const route = useRoute()
 
-const dogBreedsGroupedAlphabetically = computed(() => vuexStore.getters['dogBreeds/dogBreedsGroupedAlphabetically'])
 const isBreedsListVisible = ref(false)
 
 const isAllDogBreeds = computed(() => {
@@ -86,7 +85,7 @@ function navigateToAllBreeds() {
         />
         <div class="control-panel__breeds-list">
           <template
-            v-for="(group, key) in dogBreedsGroupedAlphabetically"
+            v-for="(group, key) in useDogBreedsStore().dogBreedsGroupedAlphabetically"
             :key="key"
           >
             <div

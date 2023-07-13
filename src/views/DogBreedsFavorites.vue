@@ -4,10 +4,9 @@ import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue'
 import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue'
 import BaseMediaCard from '@/components/base/BaseMediaCard.vue'
-import vuexStore from '@/store/index.js'
+import { useDogBreedsStore } from '@/stores/dogBreedsStore'
 
-const dogBreedsFavorites = computed(() => vuexStore.getters['dogBreeds/dogBreedsFavorites'])
-const handleFavouriteStateChange = ({ dog, favoriteState }) => vuexStore.dispatch('dogBreeds/handleFavouriteStateChange', { dog, favoriteState })
+const dogBreedsStore = useDogBreedsStore()
 
 const dogBreedRoute = computed(() => {
   return ({ key }) => ({
@@ -20,9 +19,9 @@ const dogBreedRoute = computed(() => {
 <template>
   <div class="breeds-favorites">
     <BaseInfiniteScroll
-      v-if="dogBreedsFavorites.length"
+      v-if="dogBreedsStore.dogBreedsFavorites.length"
       v-slot="{ items: dogBreedsFavoritesLimited }"
-      :items="dogBreedsFavorites"
+      :items="dogBreedsStore.dogBreedsFavorites"
       :limit-by="20"
     >
       <BaseMediaCardsGrid>
@@ -33,11 +32,11 @@ const dogBreedRoute = computed(() => {
           :name="dog.name"
           :is-favorite="dog.isFavorite"
           :navigate-to="dogBreedRoute(dog)"
-          @favorite="(favoriteState) => handleFavouriteStateChange({ favoriteState, dog })"
+          @favorite="(favoriteState) => dogBreedsStore.handleFavouriteStateChange({ favoriteState, dog })"
         />
       </BaseMediaCardsGrid>
     </BaseInfiniteScroll>
-    <h2 v-if="!dogBreedsFavorites.length">
+    <h2 v-if="!dogBreedsStore.dogBreedsFavorites.length">
       There is no favorite image
     </h2>
   </div>

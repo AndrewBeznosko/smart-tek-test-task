@@ -6,22 +6,20 @@ import DogBreedsCard from '@/components/DogBreedsCard.vue'
 import BaseSwitch from '@/components/base/BaseSwitch.vue'
 import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue'
 import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue'
-import vuexStore from '@/store/index.js'
+import { useDogBreedsStore } from '@/stores/dogBreedsStore'
 
-const dogBreedsList = computed(() => vuexStore.getters['dogBreeds/dogBreedsList'])
-const fetchDogBreedsList = () => vuexStore.dispatch('dogBreeds/fetchDogBreedsList')
-
+const dogBreedsStore = useDogBreedsStore()
 const sortByAlphabet = ref(false)
 const dogList = computed(() => sortByAlphabet.value
-  ? dogBreedsList.value
-  : shuffle(dogBreedsList.value))
+  ? dogBreedsStore.dogBreedsList
+  : shuffle(dogBreedsStore.dogBreedsList))
 
-fetchDogBreedsList()
+dogBreedsStore.fetchDogBreedsList()
 </script>
 
 <template>
   <div class="breeds">
-    <template v-if="dogBreedsList.length">
+    <template v-if="dogBreedsStore.dogBreedsList.length">
       <DogBreedsControlPanel>
         <template #right-controls>
           <BaseSwitch v-model="sortByAlphabet">
@@ -50,7 +48,7 @@ fetchDogBreedsList()
         </BaseMediaCardsGrid>
       </BaseInfiniteScroll>
     </template>
-    <h2 v-if="!dogBreedsList.length">
+    <h2 v-if="!dogBreedsStore.dogBreedsList.length">
       The dog breeds list is empty
     </h2>
   </div>

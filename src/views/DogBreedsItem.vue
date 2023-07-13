@@ -7,40 +7,32 @@ import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue'
 import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue'
 import BaseMediaCard from '@/components/base/BaseMediaCard.vue'
 import BaseBadge from '@/components/base/BaseBadge.vue'
-import vuexStore from '@/store/index.js'
+import { useDogBreedsStore } from '@/stores/dogBreedsStore'
 
 const router = useRouter()
 const route = useRoute()
 
-const getDogBreedByKey = computed(() => vuexStore.getters['dogBreeds/getDogBreedByKey'])
-const dogBreedsList = computed(() => vuexStore.getters['dogBreeds/dogBreedsList'])
-const dogsListByBreed = computed(() => vuexStore.getters['dogBreeds/dogsListByBreed'])
-const fetchDogBreedsList = ({ dog, favoriteState }) => vuexStore.dispatch('dogBreeds/fetchDogBreedsList', { dog, favoriteState })
-const handleFavouriteStateChange = ({ dog, favoriteState }) => vuexStore.dispatch('dogBreeds/handleFavouriteStateChange', { dog, favoriteState })
-const fetchDogBreedImages = ({ dog, favoriteState }) => vuexStore.dispatch('dogBreeds/fetchDogBreedImages', { dog, favoriteState })
-
+const dogBreedsStore = useDogBreedsStore()
 const dogBreedKey = computed(() => route.params?.breed)
+const dogBreedInfo = computed(() => dogBreedsStore.getDogBreedByKey(dogBreedKey) || {})
+const isShowDogs = computed(() => Boolean(dogBreedsStore.dogsListByBreed.length))
 
-const dogBreedInfo = computed(() => getDogBreedByKey.value(dogBreedKey) || {})
-
-const isShowDogs = computed(() => Boolean(dogsListByBreed.value.length))
-
-watchEffect(() => fetchDogBreedImages(dogBreedKey))
+watchEffect(() => dogBreedsStore.fetchDogBreedImages(dogBreedKey))
 
 function navigateToAllBreeds() {
   router.push({ name: ROUTE_NAMES.Breeds })
 }
 
 onMounted(async () => {
-  await fetchDogBreedsList()
+  await dogBreedsStore.fetchDogBreedsList()
 
-  if (dogBreedsList.value.length)
-    await fetchDogBreedImages(dogBreedKey)
+  if (dogBreedsStore.dogBreedsList.length)
+    await dogBreedsStore.fetchDogBreedImages(dogBreedKey)
 })
 </script>
 
 <template>
-  <div v-if="dogBreedsList.length">
+  <div v-if="dogBreedsStore.dogBreedsList.length">
     <DogBreedsControlPanel :active-dog-breed="dogBreedInfo">
       <template #left-controls>
         <BaseBadge
@@ -55,7 +47,7 @@ onMounted(async () => {
       <BaseInfiniteScroll
         v-if="isShowDogs"
         v-slot="{ items: dogsListByBreedLimited }"
-        :items="dogsListByBreed"
+        :items="dogBreedsStore.dogsListByBreed"
         :limit-by="20"
       >
         <BaseMediaCardsGrid>
@@ -65,7 +57,7 @@ onMounted(async () => {
             :img="dog.img"
             :name="dog.name"
             :is-favorite="dog.isFavorite"
-            @favorite="(favoriteState) => handleFavouriteStateChange({ dog, favoriteState })"
+            @favorite="(favoriteState) => dogBreedsStore.handleFavouriteStateChange({ dog, favoriteState })"
           />
         </BaseMediaCardsGrid>
       </BaseInfiniteScroll>
