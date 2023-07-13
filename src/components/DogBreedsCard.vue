@@ -3,16 +3,10 @@ import { computed, onMounted } from 'vue'
 import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseMediaCard from '@/components/base/BaseMediaCard.vue'
 import { useDogBreedsStore } from '@/stores/dogBreedsStore'
-
-interface Dog {
-  img: string
-  name: string
-  isFavorite: boolean
-  key: string | number
-}
+import type { DogBreed } from '@/types/DogBreed'
 
 const props = defineProps<{
-  dog: Dog
+  dog: DogBreed
   lgSize?: boolean
 }>()
 
@@ -34,9 +28,9 @@ onMounted(() => {
   <BaseMediaCard
     :img="dog.img"
     :name="dog.name"
-    :is-favorite="dog.isFavorite"
+    :is-favorite="dogBreedsStore.isDogBreedFavorite(dog)"
     :navigate-to="dogBreedRoute"
     :lg-size="lgSize"
-    @favorite="(favoriteState) => dogBreedsStore.handleFavouriteStateChange({ favoriteState, dog })"
+    @update:is-favorite="(isFavorite) => dogBreedsStore.updateDogBreedsFavorites(isFavorite, dog)"
   />
 </template>

@@ -12,7 +12,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  favorite: [isFavorite: boolean]
+  'update:isFavorite': [isFavorite: boolean]
 }>()
 
 const isImgLoaded = ref(false)
@@ -27,7 +27,7 @@ const onImgLoad = () => isImgLoaded.value = true
   >
     <button
       class="media-card__favorite-button"
-      @click="emit('favorite', !isFavorite)"
+      @click="emit('update:isFavorite', !isFavorite)"
     >
       <BaseSvgIcon
         class="media-card__favorite-icon"

@@ -56,8 +56,8 @@ onMounted(async () => {
             :key="dog.img"
             :img="dog.img"
             :name="dog.name"
-            :is-favorite="dog.isFavorite"
-            @favorite="(favoriteState) => dogBreedsStore.handleFavouriteStateChange({ dog, favoriteState })"
+            :is-favorite="dogBreedsStore.isDogBreedFavorite(dog)"
+            @update:is-favorite="(isFavorite) => dogBreedsStore.updateDogBreedsFavorites(isFavorite, dog)"
           />
         </BaseMediaCardsGrid>
       </BaseInfiniteScroll>

@@ -30,9 +30,9 @@ const dogBreedRoute = computed(() => {
           :key="dog.img"
           :img="dog.img"
           :name="dog.name"
-          :is-favorite="dog.isFavorite"
+          :is-favorite="dogBreedsStore.isDogBreedFavorite(dog)"
           :navigate-to="dogBreedRoute(dog)"
-          @favorite="(favoriteState) => dogBreedsStore.handleFavouriteStateChange({ favoriteState, dog })"
+          @update:is-favorite="(isFavorite) => dogBreedsStore.updateDogBreedsFavorites(isFavorite, dog)"
         />
       </BaseMediaCardsGrid>
     </BaseInfiniteScroll>

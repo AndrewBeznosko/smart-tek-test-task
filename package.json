@@ -8,6 +8,7 @@
     "build": "vue-tsc && vite build"
   },
   "dependencies": {
+    "@vueuse/core": "^10.2.1",
     "axios": "^0.24.0",
     "lodash-es": "^4.17.21",
     "normalize.css": "^8.0.1",

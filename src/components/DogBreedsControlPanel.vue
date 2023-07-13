@@ -5,6 +5,12 @@ import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
 import BaseBadge from '@/components/base/BaseBadge.vue'
 import { useDogBreedsStore } from '@/stores/dogBreedsStore'
+import { getFirstUpperCaseSymbol } from '@/helpers/getFirstUpperCaseSymbol'
+import type { DogBreed } from '@/types/DogBreed'
+
+interface DogBreedsGroupedAlphabetically {
+  [letter: string]: DogBreed[]
+}
 
 const props = defineProps({
   activeDogBreed: {
@@ -14,6 +20,7 @@ const props = defineProps({
 })
 const router = useRouter()
 const route = useRoute()
+const dogBreedsStore = useDogBreedsStore()
 
 const isBreedsListVisible = ref(false)
 
@@ -24,6 +31,17 @@ const isAllDogBreeds = computed(() => {
 const activeDogBreedKey = computed(() => {
   return props.activeDogBreed?.key
 })
+
+const dogBreedsGroupedAlphabetically = computed(() => dogBreedsStore.dogBreedsList.reduce(
+  (accumulator: DogBreedsGroupedAlphabetically, breed: DogBreed) => {
+    const group: string = getFirstUpperCaseSymbol(breed.name)
+
+    return {
+      ...accumulator,
+      [group]: [...(accumulator[group] || []), breed],
+    }
+  }, {},
+))
 
 function toggleBreedsListVisibility() {
   isBreedsListVisible.value = !isBreedsListVisible.value
@@ -85,7 +103,7 @@ function navigateToAllBreeds() {
         />
         <div class="control-panel__breeds-list">
           <template
-            v-for="(group, key) in useDogBreedsStore().dogBreedsGroupedAlphabetically"
+            v-for="(group, key) in dogBreedsGroupedAlphabetically"
             :key="key"
           >
             <div
