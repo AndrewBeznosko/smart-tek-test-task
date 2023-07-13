@@ -1,28 +1,18 @@
-<script>
-export default {
-  name: 'BaseMediaCardsGrid',
-
-  props: {
-    hasFirstMediaLarge: {
-      type: Boolean,
-      default: false,
-    },
-    isEmpty: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
+<script setup lang="ts">
+const props = defineProps<{
+  hasFirstMediaLarge?: boolean
+  isEmpty?: boolean
+}>()
 </script>
 
 <template>
   <div
     class="media-cards-grid"
-    :class="{ 'media-cards-grid--first-card-large': hasFirstMediaLarge }"
+    :class="{ 'media-cards-grid--first-card-large': props.hasFirstMediaLarge }"
   >
-    <template v-if="!isEmpty" />
+    <template v-if="!props.isEmpty" />
     <slot />
-    <div v-if="isEmpty" class="media-cards-grid__empty-list">
+    <div v-if="props.isEmpty" class="media-cards-grid__empty-list">
       The list is empty
     </div>
   </div>

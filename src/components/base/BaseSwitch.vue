@@ -1,25 +1,22 @@
-<script>
-export default {
-  name: 'BaseSwitch',
+<script setup lang="ts">
+import { computed } from 'vue'
 
-  props: {
-    value: [Boolean, Number],
-    checked: Boolean,
-  },
+const props = defineProps<{
+  value: boolean | number
+  checked?: boolean
+}>()
 
-  computed: {
-    isChecked() {
-      return this.checked || this.value
-    },
-  },
+const emit = defineEmits<{
+  input: [willBeChecked: boolean]
+  change: [willBeChecked: boolean]
+}>()
 
-  methods: {
-    onChangeInput(willBeChecked) {
-      this.$emit('input', willBeChecked)
+const isChecked = computed(() => props.checked || props.value)
 
-      this.$emit('change', willBeChecked)
-    },
-  },
+function onChangeInput(willBeChecked: boolean): void {
+  emit('input', willBeChecked)
+
+  emit('change', willBeChecked)
 }
 </script>
 
@@ -34,7 +31,7 @@ export default {
       @change="onChangeInput($event.target.checked)"
       @keydown.enter="onChangeInput($event.target.checked)"
     >
-    <div class="switch__toggle" />
+    <span class="switch__toggle" />
     <slot name="label-after" />
   </label>
 </template>

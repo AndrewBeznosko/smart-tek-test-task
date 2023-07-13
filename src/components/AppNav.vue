@@ -1,19 +1,11 @@
-<script>
+<script setup lang="ts">
+import { computed } from 'vue'
+import type { RouteLocationRaw } from 'vue-router'
 import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
 
-export default {
-  name: 'AppNav',
-  components: { BaseSvgIcon },
-  computed: {
-    breedsFavoritesRoute() {
-      return { name: ROUTE_NAMES.BreedsFavorites }
-    },
-    breedsRoute() {
-      return { name: ROUTE_NAMES.Breeds }
-    },
-  },
-}
+const breedsFavoritesRoute = computed((): RouteLocationRaw => ({ name: ROUTE_NAMES.BreedsFavorites }))
+const breedsRoute = computed((): RouteLocationRaw => ({ name: ROUTE_NAMES.Breeds }))
 </script>
 
 <template>
@@ -31,7 +23,7 @@ export default {
         active-class="app-nav__favourite-link--active"
         :to="breedsFavoritesRoute"
       >
-        Избранные пёсели
+        Favorite dogs
         <BaseSvgIcon
           name="heart"
           width="16"

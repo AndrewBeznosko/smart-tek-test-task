@@ -1,29 +1,19 @@
 <script setup lang="ts">
+import type { PropType } from 'vue'
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
 
-export interface Props {
-  name: string
-  icon: string
-  tag: string
-  isActive: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  tag: 'button',
+const props = defineProps({
+  name: String,
+  icon: String,
+  tag: {
+    type: String as PropType<('button' | 'a' | 'div')>,
+    default: 'button',
+  },
+  isActive: {
+    type: Boolean,
+    default: false,
+  },
 })
-
-// const props = defineProps({
-//   name: String,
-//   icon: String,
-//   tag: {
-//     type: String,
-//     default: 'button',
-//   },
-//   isActive: {
-//     type: Boolean,
-//     default: false,
-//   },
-// })
 </script>
 
 <template>

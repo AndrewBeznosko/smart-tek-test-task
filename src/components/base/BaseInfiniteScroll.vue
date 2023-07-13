@@ -1,63 +1,61 @@
-<script>
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
 import BaseLoader from '@/components/base/BaseLoader.vue'
+
+const props = defineProps({
+  items: {
+    type: Array,
+    default: () => [],
+  },
+  limitBy: [Number, String],
+})
+
+const emit = defineEmits<{
+  intersect: [page: number]
+}>()
 
 const LOADING_DELAY = 1000
 
-export default {
-  name: 'BaseInfiniteScroll',
-  components: { BaseLoader },
+const observer = ref<IntersectionObserver | null>(null)
+const loader = ref<HTMLInputElement | null>(null)
+const page = ref<number>(1)
 
-  props: {
-    items: {
-      type: Array,
-      default: () => [],
-    },
-    limitBy: [Number, String],
-  },
+const itemsLimited = computed(() => {
+  if (!props.items)
+    return []
+  if (!props.limitBy)
+    return props.items
 
-  data: () => ({
-    observer: null,
-    page: 1,
-  }),
+  return [...props.items].slice(0, page.value * props.limitBy)
+})
 
-  computed: {
-    itemsLimited() {
-      if (!this.items)
-        return []
-      if (!this.limitBy)
-        return this.items
+const isShowLoader = computed(() => {
+  return props.items?.length && ((page.value * props.limitBy) < props.items.length)
+})
 
-      return [...this.items].slice(0, this.page * this.limitBy)
-    },
+onMounted(() => {
+  observer.value = new IntersectionObserver(([entry]) => {
+    if (entry && entry.isIntersecting) {
+      if (!props.items)
+        return
 
-    isShowLoader() {
-      return this.items?.length && ((this.page * this.limitBy) < this.items.length)
-    },
-  },
+      // setTimeout only for server delay imitation
+      setTimeout(() => {
+        emit('intersect', page.value += 1)
+      }, LOADING_DELAY)
+    }
+  })
 
-  mounted() {
-    this.observer = new IntersectionObserver(([entry]) => {
-      if (entry && entry.isIntersecting) {
-        if (!this.items)
-          return
-
-        // setTimeout only for server delay imitation
-        setTimeout(() => {
-          this.$emit('intersect', this.page += 1)
-        }, LOADING_DELAY)
-      }
-    })
-
-    this.observer.observe(this.$refs.Loader)
-  },
-}
+  if ('observe' in observer.value)
+    observer.value.observe(loader.value)
+})
 </script>
 
 <template>
   <div class="infinite-scroll">
     <slot :items="itemsLimited" />
 
-    <div ref="Loader" class="infinite-scroll__loader">
+    <div ref="loader" class="infinite-scroll__loader">
       <BaseLoader v-if="isShowLoader" />
     </div>
   </div>

@@ -1,35 +1,22 @@
-<script>
-export default {
-  name: 'BaseSvgIcon',
+<script setup lang="ts">
+import { computed } from 'vue'
 
-  props: {
-    width: [String, Number],
-    height: [String, Number],
-    name: {
-      type: String,
-      require: true,
-    },
-  },
+const props = defineProps<{
+  width?: string | number
+  height?: string | number
+  name: string
+}>()
 
-  computed: {
-    icon() {
-      return `#icon-${this.name}`
-    },
-    iconStyles() {
-      return {
-        width: this.width && `${this.width}px`,
-        height: this.height && `${this.height}px`,
-      }
-    },
-  },
-}
+const icon = computed(() => `#icon-${props.name}`)
+
+const iconStyles = computed(() => ({
+  width: props.width && `${props.width}px`,
+  height: props.height && `${props.height}px`,
+}))
 </script>
 
 <template>
   <svg :style="iconStyles">
-    <use
-      ref="icon"
-      :href="icon"
-    />
+    <use :href="icon" />
   </svg>
 </template>

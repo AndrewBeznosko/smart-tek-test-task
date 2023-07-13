@@ -1,60 +1,52 @@
-<script>
-import { mapGetters } from 'vuex'
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
 import BaseBadge from '@/components/base/BaseBadge.vue'
+import vuexStore from '@/store'
 
-export default {
-  name: 'DogBreedsControlPanel',
-  components: { BaseBadge, BaseSvgIcon },
-
-  props: {
-    activeDogBreed: {
-      type: Object,
-      default: () => ({}),
-    },
+const props = defineProps({
+  activeDogBreed: {
+    type: Object,
+    default: () => ({}),
   },
+})
+const router = useRouter()
+const route = useRoute()
 
-  data: () => ({
-    isBreedsListVisible: false,
-  }),
+const dogBreedsGroupedAlphabetically = computed(() => vuexStore.getters['dogBreeds/dogBreedsGroupedAlphabetically'])
+const isBreedsListVisible = ref(false)
 
-  computed: {
-    ...mapGetters('dogBreeds', ['dogBreedsList', 'dogBreedsGroupedAlphabetically']),
+const isAllDogBreeds = computed(() => {
+  return route.name === ROUTE_NAMES.Breeds
+})
 
-    isAllDogBreeds() {
-      return this.$route.name === ROUTE_NAMES.Breeds
-    },
+const activeDogBreedKey = computed(() => {
+  return props.activeDogBreed?.key
+})
 
-    activeDogBreedKey() {
-      return this.activeDogBreed?.key
-    },
-  },
+function toggleBreedsListVisibility() {
+  isBreedsListVisible.value = !isBreedsListVisible.value
+}
+function hideBreedsList() {
+  isBreedsListVisible.value = false
+}
+function navigateToTheBreed(breed) {
+  router.push({
+    name: ROUTE_NAMES.BreedsItem,
+    params: { breed: breed.key },
+  })
+  hideBreedsList()
+}
+function navigateToAllBreeds() {
+  if (isAllDogBreeds.value)
+    return
 
-  methods: {
-    toggleBreedsListVisibility() {
-      this.isBreedsListVisible = !this.isBreedsListVisible
-    },
-    hideBreedsList() {
-      this.isBreedsListVisible = false
-    },
-    navigateToTheBreed(breed) {
-      this.$router.push({
-        name: ROUTE_NAMES.BreedsItem,
-        params: { breed: breed.key },
-      })
-      this.hideBreedsList()
-    },
-    navigateToAllBreeds() {
-      if (this.isAllDogBreeds)
-        return
-
-      this.$router.push({
-        name: ROUTE_NAMES.Breeds,
-      })
-      this.hideBreedsList()
-    },
-  },
+  router.push({
+    name: ROUTE_NAMES.Breeds,
+  })
+  hideBreedsList()
 }
 </script>
 
@@ -90,7 +82,7 @@ export default {
         <BaseBadge
           name="Все пёсели"
           :is-active="isAllDogBreeds"
-          @click.native="navigateToAllBreeds"
+          @click="navigateToAllBreeds"
         />
         <div class="control-panel__breeds-list">
           <template
@@ -107,7 +99,7 @@ export default {
               class="control-panel__breeds-alphabet-group-badge"
               :name="breed.name"
               :is-active="breed.key === activeDogBreedKey"
-              @click.native="navigateToTheBreed(breed)"
+              @click="navigateToTheBreed(breed)"
             />
           </template>
         </div>

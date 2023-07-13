@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
 
 const props = defineProps<{
-  isFavorite: boolean
+  isFavorite: boolean | null
   lgSize?: boolean
   navigateTo?: string | RouteLocationRaw
   img: string
