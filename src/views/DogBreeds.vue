@@ -7,6 +7,7 @@ import BaseSwitch from '@/components/base/BaseSwitch.vue'
 import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue'
 import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue'
 import { useDogBreedsStore } from '@/stores/dogBreedsStore'
+import type { DogBreed } from '@/types/DogBreed'
 
 const dogBreedsStore = useDogBreedsStore()
 const sortByAlphabet = ref(false)
@@ -39,7 +40,7 @@ dogBreedsStore.fetchDogBreedsList()
       >
         <BaseMediaCardsGrid has-first-media-large>
           <DogBreedsCard
-            v-for="(dog, index) in dogListLimited"
+            v-for="(dog, index) in dogListLimited as DogBreed[]"
             :key="dog.key"
             class="cell"
             :dog="dog"

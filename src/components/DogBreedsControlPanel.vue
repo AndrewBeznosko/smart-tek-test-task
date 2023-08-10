@@ -34,7 +34,9 @@ const activeDogBreedKey = computed(() => {
 
 const dogBreedsGroupedAlphabetically = computed(() => dogBreedsStore.dogBreedsList.reduce(
   (accumulator: DogBreedsGroupedAlphabetically, breed: DogBreed) => {
-    const group: string = getFirstUpperCaseSymbol(breed.name)
+    const group: string = breed.name
+      ? getFirstUpperCaseSymbol(breed.name)
+      : '_'
 
     return {
       ...accumulator,
@@ -49,7 +51,7 @@ function toggleBreedsListVisibility() {
 function hideBreedsList() {
   isBreedsListVisible.value = false
 }
-function navigateToTheBreed(breed) {
+function navigateToTheBreed(breed: DogBreed) {
   router.push({
     name: ROUTE_NAMES.BreedsItem,
     params: { breed: breed.key },

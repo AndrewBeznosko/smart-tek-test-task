@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import path from "path";
-import { svgBuilder } from "./build/svg/svgBuilder";
+import path from 'node:path'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { svgBuilder } from './build/svg/svgBuilder'
 
-function resolve(dir) {
-  return path.resolve(__dirname, dir);
+function resolve(dir: string): string {
+  return path.resolve(__dirname, dir)
 }
 
 // https://vitejs.dev/config/

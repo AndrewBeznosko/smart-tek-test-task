@@ -26,11 +26,11 @@ const itemsLimited = computed(() => {
   if (!props.limitBy)
     return props.items
 
-  return [...props.items].slice(0, page.value * props.limitBy)
+  return [...props.items].slice(0, page.value * Number(props.limitBy))
 })
 
 const isShowLoader = computed(() => {
-  return props.items?.length && ((page.value * props.limitBy) < props.items.length)
+  return props.items?.length && ((page.value * Number(props.limitBy)) < props.items.length)
 })
 
 onMounted(() => {
@@ -47,7 +47,7 @@ onMounted(() => {
   })
 
   if ('observe' in observer.value)
-    observer.value.observe(loader.value)
+    observer.value.observe(loader.value as HTMLInputElement)
 })
 </script>
 

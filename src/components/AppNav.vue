@@ -4,8 +4,8 @@ import type { RouteLocationRaw } from 'vue-router'
 import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
 
-const breedsFavoritesRoute = computed((): RouteLocationRaw => ({ name: ROUTE_NAMES.BreedsFavorites }))
-const breedsRoute = computed((): RouteLocationRaw => ({ name: ROUTE_NAMES.Breeds }))
+const breedsFavoritesRoute = computed<RouteLocationRaw>(() => ({ name: ROUTE_NAMES.BreedsFavorites }))
+const breedsRoute = computed<RouteLocationRaw>(() => ({ name: ROUTE_NAMES.Breeds }))
 </script>
 
 <template>

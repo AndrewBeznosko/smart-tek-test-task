@@ -3,6 +3,7 @@ import BaseInfiniteScroll from '@/components/base/BaseInfiniteScroll.vue'
 import BaseMediaCardsGrid from '@/components/base/BaseMediaCardsGrid.vue'
 import { useDogBreedsStore } from '@/stores/dogBreedsStore'
 import DogBreedsCard from '@/components/DogBreedsCard.vue'
+import type { DogBreed } from '@/types/DogBreed'
 
 const dogBreedsStore = useDogBreedsStore()
 </script>
@@ -17,9 +18,9 @@ const dogBreedsStore = useDogBreedsStore()
     >
       <BaseMediaCardsGrid>
         <DogBreedsCard
-          v-for="dog in dogBreedsFavoritesLimited"
+          v-for="dog in dogBreedsFavoritesLimited as DogBreed[]"
           :key="dog.img"
-          dog="dog"
+          :dog="dog"
           is-favorite
         />
       </BaseMediaCardsGrid>

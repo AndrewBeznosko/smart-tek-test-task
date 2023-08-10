@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import ROUTE_NAMES from '@/constants/route-names.constants'
 import BaseMediaCard from '@/components/base/BaseMediaCard.vue'
 import { useDogBreedsStore } from '@/stores/dogBreedsStore'
@@ -21,8 +21,9 @@ const dogBreedRoute = computed(() => {
   }
 })
 
-onMounted(async () => {
-  dogRandomImage.value = await fetchDogRandomImage(props.dog.breed, props.dog.subBreed)
+watchEffect(async () => {
+  if (props.dog.breed)
+    dogRandomImage.value = await fetchDogRandomImage(props.dog.breed, props.dog.subBreed)
 })
 </script>
 

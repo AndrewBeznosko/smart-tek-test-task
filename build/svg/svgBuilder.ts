@@ -1,5 +1,5 @@
-import { Plugin } from 'vite'
-import { readFileSync, readdirSync } from 'fs'
+import { readFileSync, readdirSync } from 'node:fs'
+import type { Plugin } from 'vite'
 
 let idPerfix = ''
 const svgTitle = /<svg([^>+].*?)>/
@@ -9,15 +9,16 @@ const hasViewBox = /(viewBox="[^>+].*?")/g
 
 const clearReturn = /(\r)|(\n)/g
 
-function findSvgFile(dir): string[] {
+function findSvgFile(dir: string): string[] {
   const svgRes = []
   const dirents = readdirSync(dir, {
-    withFileTypes: true
+    withFileTypes: true,
   })
   for (const dirent of dirents) {
     if (dirent.isDirectory()) {
-      svgRes.push(...findSvgFile(dir + dirent.name + '/'))
-    } else {
+      svgRes.push(...findSvgFile(`${dir + dirent.name}/`))
+    }
+    else {
       const svg = readFileSync(dir + dirent.name)
         .toString()
         .replace(clearReturn, '')
@@ -28,21 +29,21 @@ function findSvgFile(dir): string[] {
           let height = 0
           let content = $2.replace(
             clearHeightWidth,
-            (s1, s2, s3) => {
-              if (s2 === 'width') {
-                width = s3
-              } else if (s2 === 'height') {
-                height = s3
-              }
+            (s1: unknown, s2: unknown, s3: unknown) => {
+              if (s2 === 'width')
+                width = s3 as number
+              else if (s2 === 'height')
+                height = s3 as number
+
               return ''
-            }
+            },
           )
-          if (!hasViewBox.test($2)) {
+          if (!hasViewBox.test($2))
             content += `viewBox="0 0 ${width} ${height}"`
-          }
+
           return `<symbol id="${idPerfix}-${dirent.name.replace(
             '.svg',
-            ''
+            '',
           )}" ${content}>`
         })
         .replace('</svg>', '</symbol>')
@@ -52,11 +53,10 @@ function findSvgFile(dir): string[] {
   return svgRes
 }
 
-export const svgBuilder = (
+export function svgBuilder(
   path: string,
-  perfix = 'icon'
-): Plugin => {
-  if (path === '') return
+  perfix = 'icon',
+): Plugin | undefined {
   idPerfix = perfix
   const res = findSvgFile(path)
   // console.log(res.length)
@@ -71,8 +71,8 @@ export const svgBuilder = (
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0; height: 0">
               ${res.join('')}
             </svg>
-        `
+        `,
       )
-    }
+    },
   }
 }

@@ -2,20 +2,21 @@
 import { computed } from 'vue'
 
 const props = defineProps<{
-  value: boolean | number
+  modelValue: boolean
   checked?: boolean
 }>()
 
 const emit = defineEmits<{
-  input: [willBeChecked: boolean]
+  'update:modelValue': [willBeChecked: boolean]
   change: [willBeChecked: boolean]
 }>()
 
-const isChecked = computed(() => props.checked || props.value)
+const isChecked = computed(() => props.checked || props.modelValue)
 
-function onChangeInput(willBeChecked: boolean): void {
-  emit('input', willBeChecked)
+function onChangeInput(e: Event): void {
+  const willBeChecked = (e.target as HTMLInputElement).checked
 
+  emit('update:modelValue', willBeChecked)
   emit('change', willBeChecked)
 }
 </script>
@@ -28,8 +29,8 @@ function onChangeInput(willBeChecked: boolean): void {
       type="checkbox"
       :checked="isChecked"
       :value="isChecked"
-      @change="onChangeInput($event.target.checked)"
-      @keydown.enter="onChangeInput($event.target.checked)"
+      @change="onChangeInput"
+      @keydown.enter="onChangeInput"
     >
     <span class="switch__toggle" />
     <slot name="label-after" />

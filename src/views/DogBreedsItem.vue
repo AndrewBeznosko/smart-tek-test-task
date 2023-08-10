@@ -9,13 +9,14 @@ import BaseBadge from '@/components/base/BaseBadge.vue'
 import { useDogBreedsStore } from '@/stores/dogBreedsStore'
 import DogBreedsCard from '@/components/DogBreedsCard.vue'
 import { fetchDogImages } from '@/api/dog-breeds/dog-breeds'
+import type { DogBreed } from '@/types/DogBreed'
 
 const router = useRouter()
 const route = useRoute()
 
 const dogBreedsStore = useDogBreedsStore()
-const dogBreedKey = computed<string>(() => route.params.breed)
-const dogBreedInfo = computed(() => dogBreedsStore.getDogBreedByKey(dogBreedKey) || {})
+const dogBreedKey = computed(() => route.params.breed as string)
+const dogBreedInfo = computed<DogBreed>(() => dogBreedsStore.getDogBreedByKey(dogBreedKey.value) || {})
 const dogBreedImages = ref<string[]>([])
 const isShowDogs = computed(() => Boolean(dogBreedImages.value.length))
 
@@ -25,7 +26,7 @@ function navigateToAllBreeds() {
   router.push({ name: ROUTE_NAMES.Breeds })
 }
 
-async function fetchDogBreedImages(breed) {
+async function fetchDogBreedImages(breed: string) {
   const images = await fetchDogImages({ breed })
   dogBreedImages.value = images as string[]
 }
@@ -52,7 +53,7 @@ async function fetchDogBreedImages(breed) {
       >
         <BaseMediaCardsGrid>
           <DogBreedsCard
-            v-for="img in dogsImages"
+            v-for="img in dogsImages as string[]"
             :key="img"
             :dog="{ img }"
           />

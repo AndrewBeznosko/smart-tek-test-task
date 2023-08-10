@@ -6,7 +6,7 @@ import BaseSvgIcon from '@/components/base/BaseSvgIcon.vue'
 const props = defineProps<{
   isFavorite?: boolean
   lgSize?: boolean
-  navigateTo?: string | RouteLocationRaw
+  navigateTo?: RouteLocationRaw
   img?: string
   name?: string
 }>()
@@ -48,7 +48,7 @@ const onImgLoad = () => isImgLoaded.value = true
     </transition>
     <div v-if="name" class="media-card__name-block">
       <router-link
-        v-if="Boolean(navigateTo)"
+        v-if="navigateTo"
         :to="navigateTo"
         class="media-card__name-link"
         v-text="name"
